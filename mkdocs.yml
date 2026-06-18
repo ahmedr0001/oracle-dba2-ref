@@ -1,0 +1,84 @@
+site_name: Oracle DBA2 Reference
+site_description: Oracle DBA2 (Workshop 2) — RMAN, Backup, Recovery, and beyond
+site_url: https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: cyan
+    accent: light blue
+  font:
+    text: JetBrains Mono
+    code: JetBrains Mono
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.instant
+    - search.highlight
+    - search.suggest
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - toc.follow
+  icon:
+    repo: fontawesome/brands/github
+    logo: material/shield-check
+
+extra_css:
+  - stylesheets/extra.css
+
+plugins:
+  - search
+  - tags
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - admonition
+  - tables
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - "1 · RMAN Fundamentals":
+    - Overview: 01-rman-intro/index.md
+    - Why Backup & Failure Types: 01-rman-intro/why-backup.md
+    - RPO & RTO: 01-rman-intro/rpo-rto.md
+    - RMAN Architecture: 01-rman-intro/rman-architecture.md
+    - RMAN Connections: 01-rman-intro/rman-connections.md
+    - RMAN Configuration: 01-rman-intro/rman-configuration.md
+    - Catalog Database Setup: 01-rman-intro/catalog-db.md
+  - "2 · Storage & Redo":
+    - Overview: 02-backup-types/index.md
+    - Fast Recovery Area (FRA): 02-backup-types/fra.md
+    - Multiplexing: 02-backup-types/multiplexing.md
+    - Archive Log Mode: 02-backup-types/archivelog.md
+  - "3 · Backup Commands":
+    - Overview: 03-backup-commands/index.md
+    - Backup Types Explained: 03-backup-commands/backup-types.md
+    - Whole & Partial Backup: 03-backup-commands/whole-partial.md
+    - Backup Control Files: 03-backup-commands/controlfile.md
+    - Backup Archived Logs: 03-backup-commands/archivelogs.md
+    - Backup As Copy: 03-backup-commands/backup-as-copy.md
+    - More Backup Options: 03-backup-commands/more-options.md
+  - "4 · Consistent vs Inconsistent":
+    - Backup Modes: 04-backup-types/consistent-inconsistent.md
+  - Quick Reference: quick-reference.md

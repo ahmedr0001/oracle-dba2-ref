@@ -1,0 +1,355 @@
+---
+tags: [quick-reference]
+hide:
+  - toc
+---
+
+# ⚡ Quick Reference
+
+Every RMAN command on one page. Use `Ctrl+F` / `Cmd+F` to search.
+
+---
+
+## 🔌 Connect to RMAN
+
+```bash
+rman target /                                          # local, no catalog
+rman target / nocatalog                                # explicit no catalog
+rman target sys/oracle@ORCL                            # with password
+rman target / catalog rmanadmin/pass@CatDB             # with catalog
+rman target / log=/tmp/rman.log APPEND                 # with log file
+rman target / cmdfile=/u01/scripts/backup.rman         # run script file
+RMAN> @/u01/scripts/backup.rman                        # run script from prompt
+RMAN> EXIT;                                            # quit RMAN
+```
+
+---
+
+## ⚙️ RMAN Configuration
+
+```sql
+RMAN> SHOW ALL;                                        -- view all settings
+RMAN> SHOW RETENTION POLICY;
+
+-- Retention
+RMAN> CONFIGURE RETENTION POLICY TO RECOVERY WINDOW OF 7 DAYS;
+RMAN> CONFIGURE RETENTION POLICY TO REDUNDANCY 3;
+RMAN> CONFIGURE RETENTION POLICY TO NONE;
+RMAN> CONFIGURE RETENTION POLICY CLEAR;
+
+-- Optimization
+RMAN> CONFIGURE BACKUP OPTIMIZATION ON;
+RMAN> CONFIGURE BACKUP OPTIMIZATION OFF;
+
+-- Device
+RMAN> CONFIGURE DEFAULT DEVICE TYPE TO DISK;
+RMAN> CONFIGURE DEFAULT DEVICE TYPE TO SBT;
+
+-- Control file auto backup
+RMAN> CONFIGURE CONTROLFILE AUTOBACKUP ON;
+RMAN> CONFIGURE CONTROLFILE AUTOBACKUP OFF;
+RMAN> CONFIGURE CONTROLFILE AUTOBACKUP FORMAT
+      FOR DEVICE TYPE DISK TO '/u01/bkp/cf_%F';
+
+-- Channel (auto)
+RMAN> CONFIGURE CHANNEL DEVICE TYPE DISK
+      FORMAT '/u01/rman/%d_%T_%U';
+RMAN> CONFIGURE CHANNEL DEVICE TYPE DISK CLEAR;
+
+-- Parallelism
+RMAN> CONFIGURE DEVICE TYPE DISK PARALLELISM 2;
+
+-- Max backup set size
+RMAN> CONFIGURE MAXSETSIZE TO 4G;
+RMAN> CONFIGURE MAXSETSIZE TO UNLIMITED;
+
+-- Encryption
+RMAN> CONFIGURE ENCRYPTION FOR DATABASE ON;
+RMAN> CONFIGURE ENCRYPTION FOR DATABASE OFF;
+RMAN> CONFIGURE ENCRYPTION ALGORITHM 'AES256';
+
+-- Reset everything
+RMAN> CONFIGURE ALL CLEAR;
+```
+
+---
+
+## 💾 Whole Database Backup
+
+```sql
+RMAN> BACKUP DATABASE;
+RMAN> BACKUP DATABASE PLUS ARCHIVELOG;
+RMAN> BACKUP AS COMPRESSED BACKUPSET DATABASE;
+RMAN> BACKUP AS COMPRESSED BACKUPSET DATABASE PLUS ARCHIVELOG;
+RMAN> BACKUP DATABASE FORMAT '/u01/rman/%d_%T_%U';
+RMAN> BACKUP DATABASE TAG 'pre_patch';
+
+-- Incremental
+RMAN> BACKUP INCREMENTAL LEVEL 0 DATABASE;
+RMAN> BACKUP INCREMENTAL LEVEL 1 DATABASE;
+RMAN> BACKUP INCREMENTAL LEVEL 1 CUMULATIVE DATABASE;
+RMAN> BACKUP INCREMENTAL LEVEL 1 DATABASE PLUS ARCHIVELOG;
+
+-- Consistent (cold) backup — DB in MOUNT state
+RMAN> STARTUP MOUNT;
+RMAN> BACKUP DATABASE;
+RMAN> ALTER DATABASE OPEN;
+```
+
+---
+
+## 📂 Partial Backup
+
+```sql
+-- Tablespace
+RMAN> BACKUP TABLESPACE users;
+RMAN> BACKUP TABLESPACE users, tools, app_data;
+RMAN> BACKUP TABLESPACE users PLUS ARCHIVELOG;
+RMAN> BACKUP INCREMENTAL LEVEL 1 TABLESPACE users;
+
+-- Datafile (by number or path)
+RMAN> BACKUP DATAFILE 1, 2, 3;
+RMAN> BACKUP DATAFILE '/u01/oradata/ORCL/users01.dbf';
+RMAN> BACKUP INCREMENTAL LEVEL 1 DATAFILE 4, 5;
+
+-- SPFILE
+RMAN> BACKUP SPFILE;
+RMAN> BACKUP SPFILE FORMAT '/u01/rman/spfile_%T.bkp';
+```
+
+---
+
+## 🗂️ Control File Backup
+
+```sql
+-- Auto (configure once)
+RMAN> CONFIGURE CONTROLFILE AUTOBACKUP ON;
+
+-- Manual backupset
+RMAN> BACKUP CURRENT CONTROLFILE;
+RMAN> BACKUP TABLESPACE users INCLUDE CURRENT CONTROLFILE;
+RMAN> BACKUP DATAFILE 1;                -- always auto-backs up CF too
+
+-- Image copy
+RMAN> BACKUP AS COPY CURRENT CONTROLFILE FORMAT '/u01/bkp/cf.bkp';
+
+-- Trace file (SQL script to recreate CF)
+SQL> ALTER DATABASE BACKUP CONTROLFILE TO TRACE;
+SQL> ALTER DATABASE BACKUP CONTROLFILE TO TRACE AS '/u01/cf_trace.sql';
+```
+
+---
+
+## 📜 Archive Log Backup
+
+```sql
+-- All
+RMAN> BACKUP ARCHIVELOG ALL;
+RMAN> BACKUP ARCHIVELOG ALL DELETE INPUT;
+RMAN> BACKUP ARCHIVELOG ALL DELETE ALL INPUT;
+RMAN> BACKUP ARCHIVELOG NOT BACKED UP 1 TIMES;
+
+-- By SCN
+RMAN> BACKUP ARCHIVELOG FROM SCN 1000;
+RMAN> BACKUP ARCHIVELOG UNTIL SCN 2000;
+RMAN> BACKUP ARCHIVELOG SCN BETWEEN 1000 AND 2000;
+
+-- By sequence
+RMAN> BACKUP ARCHIVELOG FROM SEQUENCE 100;
+RMAN> BACKUP ARCHIVELOG FROM SEQUENCE 100 UNTIL SEQUENCE 200;
+RMAN> BACKUP ARCHIVELOG SEQUENCE BETWEEN 100 AND 200;
+
+-- By time
+RMAN> BACKUP ARCHIVELOG FROM TIME 'SYSDATE-1';
+RMAN> BACKUP ARCHIVELOG UNTIL TIME "TO_DATE('18/06/2026','DD/MM/YYYY')";
+
+-- Plus archivelog (included with DB backup)
+RMAN> BACKUP DATABASE PLUS ARCHIVELOG;
+```
+
+---
+
+## 📸 Image Copies
+
+```sql
+RMAN> BACKUP AS COPY DATABASE;
+RMAN> BACKUP AS COPY TABLESPACE users;
+RMAN> BACKUP AS COPY DATAFILE 4 FORMAT '/u01/copies/df4.dbf';
+RMAN> BACKUP AS COPY NOCHECKSUM DATAFILE '/path/file.dbf' FORMAT '/path/copy.dbf';
+RMAN> BACKUP AS COPY CURRENT CONTROLFILE FORMAT '/u01/copies/cf.bkp';
+RMAN> BACKUP AS COPY
+      DB_FILE_NAME_CONVERT ('/u01/oradata/ORCL','/u01/copies')
+      TABLESPACE users;
+
+-- Instant recovery with image copy
+RMAN> SWITCH DATAFILE 4 TO COPY;
+RMAN> RECOVER DATAFILE 4;
+```
+
+---
+
+## 🔧 Backup Options
+
+```sql
+-- Device type
+RMAN> BACKUP DEVICE TYPE DISK DATABASE;
+RMAN> BACKUP DEVICE TYPE SBT DATABASE;
+
+-- Tags
+RMAN> BACKUP DATABASE TAG 'weekly_full';
+RMAN> BACKUP TABLESPACE users TAG 'before_purge';
+RMAN> RESTORE DATABASE FROM TAG 'weekly_full';
+
+-- Not backed up
+RMAN> BACKUP ARCHIVELOG NOT BACKED UP 1 TIMES;
+RMAN> BACKUP NOT BACKED UP SINCE TIME 'SYSDATE-1' DATABASE PLUS ARCHIVELOG;
+
+-- Compression
+RMAN> BACKUP AS COMPRESSED BACKUPSET DATABASE;
+RMAN> CONFIGURE COMPRESSION ALGORITHM 'MEDIUM';
+```
+
+---
+
+## 📋 LIST & REPORT
+
+```sql
+RMAN> LIST BACKUP SUMMARY;
+RMAN> LIST BACKUP;
+RMAN> LIST BACKUP OF DATABASE;
+RMAN> LIST BACKUP OF TABLESPACE users;
+RMAN> LIST BACKUP OF DATAFILE 1;
+RMAN> LIST BACKUP OF ARCHIVELOG ALL;
+RMAN> LIST BACKUP OF CONTROLFILE;
+RMAN> LIST COPY;
+RMAN> LIST COPY OF DATABASE;
+RMAN> LIST DB_UNIQUE_NAME ALL;          -- catalog: all registered DBs
+
+RMAN> REPORT OBSOLETE;
+RMAN> REPORT NEED BACKUP;
+RMAN> REPORT NEED BACKUP DAYS 3;
+RMAN> REPORT NEED BACKUP REDUNDANCY 2;
+RMAN> REPORT SCHEMA;                    -- list all datafiles
+```
+
+---
+
+## 🧹 Maintenance
+
+```sql
+RMAN> DELETE OBSOLETE;
+RMAN> DELETE NOPROMPT OBSOLETE;
+RMAN> DELETE NOPROMPT ARCHIVELOG ALL COMPLETED BEFORE 'SYSDATE-7';
+RMAN> DELETE NOPROMPT ARCHIVELOG ALL BACKED UP 1 TIMES TO DISK;
+RMAN> CROSSCHECK BACKUP;               -- verify backups exist on disk
+RMAN> CROSSCHECK ARCHIVELOG ALL;
+RMAN> DELETE EXPIRED BACKUP;           -- remove catalog records for missing files
+RMAN> DELETE EXPIRED ARCHIVELOG ALL;
+RMAN> VALIDATE DATABASE;
+RMAN> VALIDATE DATABASE CHECK LOGICAL;
+RMAN> VALIDATE TABLESPACE users;
+RMAN> VALIDATE BACKUPSET 42;
+```
+
+---
+
+## 📁 Catalog Management
+
+```sql
+-- Create catalog (run as catalog user):
+RMAN> CREATE CATALOG;
+
+-- Register target DB in catalog:
+RMAN> REGISTER DATABASE;
+
+-- Sync catalog with control file:
+RMAN> RESYNC CATALOG;
+
+-- Remove a DB from catalog:
+RMAN> UNREGISTER DATABASE 'ORCL';
+```
+
+---
+
+## 🌊 FRA Management
+
+```sql
+ALTER SYSTEM SET DB_RECOVERY_FILE_DEST = '/u01/fra' SCOPE=BOTH;
+ALTER SYSTEM SET DB_RECOVERY_FILE_DEST_SIZE = 20G SCOPE=BOTH;
+ALTER SYSTEM SET DB_RECOVERY_FILE_DEST = '' SCOPE=BOTH;    -- disable FRA
+
+SELECT * FROM V$RECOVERY_FILE_DEST;
+SELECT FILE_TYPE, PERCENT_SPACE_USED, PERCENT_SPACE_RECLAIMABLE
+FROM V$RECOVERY_AREA_USAGE;
+```
+
+---
+
+## 🔁 Multiplexing
+
+```sql
+-- Control files
+SELECT NAME FROM V$CONTROLFILE;
+ALTER SYSTEM SET CONTROL_FILES = '/path/cf1.ctl','/path/cf2.ctl' SCOPE=SPFILE;
+
+-- Redo log groups and members
+SELECT GROUP#, SEQUENCE#, STATUS FROM V$LOG;
+SELECT GROUP#, MEMBER FROM V$LOGFILE;
+ALTER DATABASE ADD LOGFILE MEMBER '/disk_b/redo01b.log' TO GROUP 1;
+ALTER DATABASE ADD LOGFILE GROUP 4
+  ('/disk_a/redo04a.log', '/disk_b/redo04b.log') SIZE 200M;
+ALTER DATABASE DROP LOGFILE MEMBER '/path/redo01a.log';
+ALTER DATABASE DROP LOGFILE GROUP 4;
+ALTER SYSTEM SWITCH LOGFILE;
+ALTER SYSTEM CHECKPOINT;
+```
+
+---
+
+## 📊 Monitoring Views
+
+| View | What It Shows |
+|---|---|
+| `V$RMAN_BACKUP_JOB_DETAILS` | Backup job history with status, timing |
+| `V$RMAN_STATUS` | All RMAN operations (backup, restore, recover) |
+| `V$BACKUP_SET` | Backup sets in the repository |
+| `V$BACKUP_PIECE` | Individual backup piece files |
+| `V$BACKUP_DATAFILE` | Datafiles in backup sets |
+| `V$ARCHIVED_LOG` | Archive log history |
+| `V$LOG` | Online redo log groups |
+| `V$LOGFILE` | Online redo log members (physical files) |
+| `V$CONTROLFILE` | Control file locations |
+| `V$RECOVERY_FILE_DEST` | FRA usage summary |
+| `V$RECOVERY_AREA_USAGE` | FRA usage breakdown by file type |
+| `V$SESSION_LONGOPS` | Long-running ops (monitor live backup) |
+| `RC_DATABASE` | Catalog: registered databases |
+| `RC_BACKUP_SET` | Catalog: backup set history |
+| `RC_ARCHIVED_LOG` | Catalog: archive log history |
+
+---
+
+## 📅 Sample Production Nightly Backup Script
+
+```bash
+#!/bin/bash
+export ORACLE_SID=ORCL
+export ORACLE_HOME=/u01/app/oracle/product/19.3.0/dbhome_1
+export PATH=$ORACLE_HOME/bin:$PATH
+
+LOGFILE=/u01/rman_logs/backup_$(date +%Y%m%d_%H%M).log
+
+rman target / log=$LOGFILE APPEND << 'EOF'
+RUN {
+  BACKUP AS COMPRESSED BACKUPSET
+    INCREMENTAL LEVEL 1
+    DATABASE PLUS ARCHIVELOG
+    FORMAT '/u01/rman/%d_%T_%s_%p_%U'
+    TAG 'nightly_incremental';
+  DELETE NOPROMPT OBSOLETE;
+  DELETE NOPROMPT ARCHIVELOG ALL
+    BACKED UP 1 TIMES TO DISK
+    COMPLETED BEFORE 'SYSDATE-3';
+}
+EXIT;
+EOF
+```
