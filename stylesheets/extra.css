@@ -1,0 +1,64 @@
+/* ── Oracle DBA2 Reference — Custom Dark Theme (Cyan accent) ── */
+:root {
+  --md-code-bg-color: #0d1117;
+  --md-code-fg-color: #e6edf3;
+}
+
+.md-tabs { background-color: #0d1f2d; }
+.md-clipboard { opacity: 0.6; }
+.md-clipboard:hover { opacity: 1; color: #00b8d4; }
+
+.md-typeset pre > code {
+  border: 1px solid #30363d;
+  border-radius: 6px;
+}
+
+.md-typeset table:not([class]) tr:nth-child(even) {
+  background-color: rgba(255,255,255,.04);
+}
+
+code { color: #00e5ff; }
+
+.md-nav__link--active { color: #00b8d4 !important; font-weight: 700; }
+
+/* Hero banner */
+.hero-banner {
+  background: linear-gradient(135deg, #0d1f2d 0%, #01324a 50%, #004d6e 100%);
+  border: 1px solid #00b8d4;
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.hero-banner h1 { color: #00e5ff; font-size: 2rem; margin: 0 0 .5rem; }
+.hero-banner p  { color: #9ba3af; margin: 0; }
+
+/* Category cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.card {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  padding: 1.2rem 1.4rem;
+  transition: border-color .2s, transform .2s;
+  text-decoration: none !important;
+  display: block;
+}
+.card:hover { border-color: #00b8d4; transform: translateY(-2px); }
+.card .card-icon { font-size: 1.8rem; margin-bottom: .5rem; }
+.card h3 { color: #e6edf3; margin: 0 0 .4rem; font-size: 1rem; }
+.card p  { color: #8b949e; margin: 0; font-size: .85rem; line-height: 1.4; }
+
+/* concept box */
+.concept-box {
+  background: #0d1f2d;
+  border-left: 4px solid #00b8d4;
+  border-radius: 4px;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+}

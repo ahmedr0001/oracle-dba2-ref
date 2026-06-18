@@ -1,0 +1,2020 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Oracle DBA2 (Workshop 2) — RMAN, Backup, Recovery, and beyond">
+      
+      
+      
+        <link rel="canonical" href="https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/quick-reference/">
+      
+      
+        <link rel="prev" href="../04-backup-types/consistent-inconsistent/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Quick Reference - Oracle DBA2 Reference</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=JetBrains+Mono:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"JetBrains Mono";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="cyan" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#quick-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Oracle DBA2 Reference" class="md-header__button md-logo" aria-label="Oracle DBA2 Reference" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Oracle DBA2 Reference
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Quick Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../01-rman-intro/" class="md-tabs__link">
+          
+  
+  
+  1 · RMAN Fundamentals
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../02-backup-types/" class="md-tabs__link">
+          
+  
+  
+  2 · Storage & Redo
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../03-backup-commands/" class="md-tabs__link">
+          
+  
+  
+  3 · Backup Commands
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../04-backup-types/consistent-inconsistent/" class="md-tabs__link">
+          
+  
+  
+  4 · Consistent vs Inconsistent
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quick Reference
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Oracle DBA2 Reference" class="md-nav__button md-logo" aria-label="Oracle DBA2 Reference" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"/></svg>
+
+    </a>
+    Oracle DBA2 Reference
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 · RMAN Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1 · RMAN Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-rman-intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-rman-intro/why-backup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Backup & Failure Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-rman-intro/rpo-rto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RPO & RTO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-rman-intro/rman-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RMAN Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-rman-intro/rman-connections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RMAN Connections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-rman-intro/rman-configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RMAN Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-rman-intro/catalog-db/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalog Database Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 · Storage & Redo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2 · Storage & Redo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-backup-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-backup-types/fra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fast Recovery Area (FRA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-backup-types/multiplexing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multiplexing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-backup-types/archivelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive Log Mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 · Backup Commands
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3 · Backup Commands
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-backup-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-backup-commands/backup-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backup Types Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-backup-commands/whole-partial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Whole & Partial Backup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-backup-commands/controlfile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backup Control Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-backup-commands/archivelogs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backup Archived Logs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-backup-commands/backup-as-copy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backup As Copy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-backup-commands/more-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    More Backup Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 · Consistent vs Inconsistent
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4 · Consistent vs Inconsistent
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-backup-types/consistent-inconsistent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backup Modes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#connect-to-rman" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔌 Connect to RMAN
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rman-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚙️ RMAN Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whole-database-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💾 Whole Database Backup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partial-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📂 Partial Backup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#control-file-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🗂️ Control File Backup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#archive-log-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📜 Archive Log Backup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#image-copies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📸 Image Copies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backup-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔧 Backup Options
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📋 LIST &amp; REPORT
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧹 Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#catalog-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📁 Catalog Management
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fra-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🌊 FRA Management
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multiplexing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔁 Multiplexing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-views" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 Monitoring Views
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sample-production-nightly-backup-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📅 Sample Production Nightly Backup Script
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#connect-to-rman" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔌 Connect to RMAN
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rman-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚙️ RMAN Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whole-database-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💾 Whole Database Backup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partial-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📂 Partial Backup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#control-file-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🗂️ Control File Backup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#archive-log-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📜 Archive Log Backup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#image-copies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📸 Image Copies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backup-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔧 Backup Options
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📋 LIST &amp; REPORT
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧹 Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#catalog-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📁 Catalog Management
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fra-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🌊 FRA Management
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multiplexing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔁 Multiplexing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-views" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 Monitoring Views
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sample-production-nightly-backup-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📅 Sample Production Nightly Backup Script
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">quick-reference</span>
+      
+    
+  </nav>
+
+
+
+<h1 id="quick-reference">⚡ Quick Reference<a class="headerlink" href="#quick-reference" title="Permanent link">&para;</a></h1>
+<p>Every RMAN command on one page. Use <code>Ctrl+F</code> / <code>Cmd+F</code> to search.</p>
+<hr />
+<h2 id="connect-to-rman">🔌 Connect to RMAN<a class="headerlink" href="#connect-to-rman" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>rman<span class="w"> </span>target<span class="w"> </span>/<span class="w">                                          </span><span class="c1"># local, no catalog</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>rman<span class="w"> </span>target<span class="w"> </span>/<span class="w"> </span>nocatalog<span class="w">                                </span><span class="c1"># explicit no catalog</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>rman<span class="w"> </span>target<span class="w"> </span>sys/oracle@ORCL<span class="w">                            </span><span class="c1"># with password</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>rman<span class="w"> </span>target<span class="w"> </span>/<span class="w"> </span>catalog<span class="w"> </span>rmanadmin/pass@CatDB<span class="w">             </span><span class="c1"># with catalog</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>rman<span class="w"> </span>target<span class="w"> </span>/<span class="w"> </span><span class="nv">log</span><span class="o">=</span>/tmp/rman.log<span class="w"> </span>APPEND<span class="w">                 </span><span class="c1"># with log file</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>rman<span class="w"> </span>target<span class="w"> </span>/<span class="w"> </span><span class="nv">cmdfile</span><span class="o">=</span>/u01/scripts/backup.rman<span class="w">         </span><span class="c1"># run script file</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>RMAN&gt;<span class="w"> </span>@/u01/scripts/backup.rman<span class="w">                        </span><span class="c1"># run script from prompt</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>RMAN&gt;<span class="w"> </span>EXIT<span class="p">;</span><span class="w">                                            </span><span class="c1"># quit RMAN</span>
+</span></code></pre></div>
+<hr />
+<h2 id="rman-configuration">⚙️ RMAN Configuration<a class="headerlink" href="#rman-configuration" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SHOW</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span><span class="w">                                        </span><span class="c1">-- view all settings</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SHOW</span><span class="w"> </span><span class="n">RETENTION</span><span class="w"> </span><span class="n">POLICY</span><span class="p">;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">-- Retention</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">RETENTION</span><span class="w"> </span><span class="n">POLICY</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">RECOVERY</span><span class="w"> </span><span class="n">WINDOW</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="n">DAYS</span><span class="p">;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">RETENTION</span><span class="w"> </span><span class="n">POLICY</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">REDUNDANCY</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">RETENTION</span><span class="w"> </span><span class="n">POLICY</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">NONE</span><span class="p">;</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">RETENTION</span><span class="w"> </span><span class="n">POLICY</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1">-- Optimization</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">OPTIMIZATION</span><span class="w"> </span><span class="k">ON</span><span class="p">;</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">OPTIMIZATION</span><span class="w"> </span><span class="k">OFF</span><span class="p">;</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="c1">-- Device</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">DISK</span><span class="p">;</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">SBT</span><span class="p">;</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="c1">-- Control file auto backup</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="w"> </span><span class="n">AUTOBACKUP</span><span class="w"> </span><span class="k">ON</span><span class="p">;</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="w"> </span><span class="n">AUTOBACKUP</span><span class="w"> </span><span class="k">OFF</span><span class="p">;</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="w"> </span><span class="n">AUTOBACKUP</span><span class="w"> </span><span class="n">FORMAT</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">      </span><span class="k">FOR</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;/u01/bkp/cf_%F&#39;</span><span class="p">;</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="c1">-- Channel (auto)</span>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CHANNEL</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="w">      </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/u01/rman/%d_%T_%U&#39;</span><span class="p">;</span>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CHANNEL</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span>
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="c1">-- Parallelism</span>
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="n">PARALLELISM</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="c1">-- Max backup set size</span>
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">MAXSETSIZE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="mi">4</span><span class="k">G</span><span class="p">;</span>
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">MAXSETSIZE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">UNLIMITED</span><span class="p">;</span>
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="c1">-- Encryption</span>
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">ENCRYPTION</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">ON</span><span class="p">;</span>
+</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">ENCRYPTION</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">OFF</span><span class="p">;</span>
+</span><span id="__span-1-39"><a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">ENCRYPTION</span><span class="w"> </span><span class="n">ALGORITHM</span><span class="w"> </span><span class="s1">&#39;AES256&#39;</span><span class="p">;</span>
+</span><span id="__span-1-40"><a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a>
+</span><span id="__span-1-41"><a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a><span class="c1">-- Reset everything</span>
+</span><span id="__span-1-42"><a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="whole-database-backup">💾 Whole Database Backup<a class="headerlink" href="#whole-database-backup" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">COMPRESSED</span><span class="w"> </span><span class="n">BACKUPSET</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">COMPRESSED</span><span class="w"> </span><span class="n">BACKUPSET</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/u01/rman/%d_%T_%U&#39;</span><span class="p">;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">TAG</span><span class="w"> </span><span class="s1">&#39;pre_patch&#39;</span><span class="p">;</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1">-- Incremental</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">INCREMENTAL</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">INCREMENTAL</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">INCREMENTAL</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">CUMULATIVE</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">INCREMENTAL</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="c1">-- Consistent (cold) backup — DB in MOUNT state</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">STARTUP</span><span class="w"> </span><span class="n">MOUNT</span><span class="p">;</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">OPEN</span><span class="p">;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="partial-backup">📂 Partial Backup<a class="headerlink" href="#partial-backup" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">-- Tablespace</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="p">,</span><span class="w"> </span><span class="n">tools</span><span class="p">,</span><span class="w"> </span><span class="n">app_data</span><span class="p">;</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">INCREMENTAL</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1">-- Datafile (by number or path)</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="s1">&#39;/u01/oradata/ORCL/users01.dbf&#39;</span><span class="p">;</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">INCREMENTAL</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="c1">-- SPFILE</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">SPFILE</span><span class="p">;</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">SPFILE</span><span class="w"> </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/u01/rman/spfile_%T.bkp&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="control-file-backup">🗂️ Control File Backup<a class="headerlink" href="#control-file-backup" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">-- Auto (configure once)</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="w"> </span><span class="n">AUTOBACKUP</span><span class="w"> </span><span class="k">ON</span><span class="p">;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1">-- Manual backupset</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">CURRENT</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="p">;</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">INCLUDE</span><span class="w"> </span><span class="k">CURRENT</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="p">;</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">                </span><span class="c1">-- always auto-backs up CF too</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="c1">-- Image copy</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">COPY</span><span class="w"> </span><span class="k">CURRENT</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="w"> </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/u01/bkp/cf.bkp&#39;</span><span class="p">;</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="c1">-- Trace file (SQL script to recreate CF)</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="k">SQL</span><span class="o">&gt;</span><span class="w"> </span><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">TRACE</span><span class="p">;</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="k">SQL</span><span class="o">&gt;</span><span class="w"> </span><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">TRACE</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s1">&#39;/u01/cf_trace.sql&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="archive-log-backup">📜 Archive Log Backup<a class="headerlink" href="#archive-log-backup" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">-- All</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="k">INPUT</span><span class="p">;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">INPUT</span><span class="p">;</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">BACKED</span><span class="w"> </span><span class="n">UP</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">TIMES</span><span class="p">;</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1">-- By SCN</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">SCN</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">UNTIL</span><span class="w"> </span><span class="n">SCN</span><span class="w"> </span><span class="mi">2000</span><span class="p">;</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="n">SCN</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">2000</span><span class="p">;</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="c1">-- By sequence</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="k">UNTIL</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="c1">-- By time</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="s1">&#39;SYSDATE-1&#39;</span><span class="p">;</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">UNTIL</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="ss">&quot;TO_DATE(&#39;18/06/2026&#39;,&#39;DD/MM/YYYY&#39;)&quot;</span><span class="p">;</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="c1">-- Plus archivelog (included with DB backup)</span>
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="image-copies">📸 Image Copies<a class="headerlink" href="#image-copies" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">COPY</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">COPY</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">COPY</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/u01/copies/df4.dbf&#39;</span><span class="p">;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">COPY</span><span class="w"> </span><span class="n">NOCHECKSUM</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="s1">&#39;/path/file.dbf&#39;</span><span class="w"> </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/path/copy.dbf&#39;</span><span class="p">;</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">COPY</span><span class="w"> </span><span class="k">CURRENT</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="w"> </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/u01/copies/cf.bkp&#39;</span><span class="p">;</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">COPY</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">      </span><span class="n">DB_FILE_NAME_CONVERT</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;/u01/oradata/ORCL&#39;</span><span class="p">,</span><span class="s1">&#39;/u01/copies&#39;</span><span class="p">)</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">      </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1">-- Instant recovery with image copy</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">SWITCH</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">COPY</span><span class="p">;</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">RECOVER</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="backup-options">🔧 Backup Options<a class="headerlink" href="#backup-options" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">-- Device type</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">SBT</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1">-- Tags</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">TAG</span><span class="w"> </span><span class="s1">&#39;weekly_full&#39;</span><span class="p">;</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">TAG</span><span class="w"> </span><span class="s1">&#39;before_purge&#39;</span><span class="p">;</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">RESTORE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">TAG</span><span class="w"> </span><span class="s1">&#39;weekly_full&#39;</span><span class="p">;</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c1">-- Not backed up</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">BACKED</span><span class="w"> </span><span class="n">UP</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">TIMES</span><span class="p">;</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">BACKED</span><span class="w"> </span><span class="n">UP</span><span class="w"> </span><span class="n">SINCE</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="s1">&#39;SYSDATE-1&#39;</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="c1">-- Compression</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">COMPRESSED</span><span class="w"> </span><span class="n">BACKUPSET</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">COMPRESSION</span><span class="w"> </span><span class="n">ALGORITHM</span><span class="w"> </span><span class="s1">&#39;MEDIUM&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="list-report">📋 LIST &amp; REPORT<a class="headerlink" href="#list-report" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">LIST</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">SUMMARY</span><span class="p">;</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">LIST</span><span class="w"> </span><span class="n">BACKUP</span><span class="p">;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">LIST</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">LIST</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">LIST</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">LIST</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">LIST</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="p">;</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">LIST</span><span class="w"> </span><span class="k">COPY</span><span class="p">;</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">LIST</span><span class="w"> </span><span class="k">COPY</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">LIST</span><span class="w"> </span><span class="n">DB_UNIQUE_NAME</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span><span class="w">          </span><span class="c1">-- catalog: all registered DBs</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">REPORT</span><span class="w"> </span><span class="n">OBSOLETE</span><span class="p">;</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">REPORT</span><span class="w"> </span><span class="n">NEED</span><span class="w"> </span><span class="n">BACKUP</span><span class="p">;</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">REPORT</span><span class="w"> </span><span class="n">NEED</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">DAYS</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">REPORT</span><span class="w"> </span><span class="n">NEED</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">REDUNDANCY</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">REPORT</span><span class="w"> </span><span class="k">SCHEMA</span><span class="p">;</span><span class="w">                    </span><span class="c1">-- list all datafiles</span>
+</span></code></pre></div>
+<hr />
+<h2 id="maintenance">🧹 Maintenance<a class="headerlink" href="#maintenance" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">OBSOLETE</span><span class="p">;</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">NOPROMPT</span><span class="w"> </span><span class="n">OBSOLETE</span><span class="p">;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">NOPROMPT</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">COMPLETED</span><span class="w"> </span><span class="k">BEFORE</span><span class="w"> </span><span class="s1">&#39;SYSDATE-7&#39;</span><span class="p">;</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">NOPROMPT</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">BACKED</span><span class="w"> </span><span class="n">UP</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">TIMES</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">DISK</span><span class="p">;</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CROSSCHECK</span><span class="w"> </span><span class="n">BACKUP</span><span class="p">;</span><span class="w">               </span><span class="c1">-- verify backups exist on disk</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CROSSCHECK</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">EXPIRED</span><span class="w"> </span><span class="n">BACKUP</span><span class="p">;</span><span class="w">           </span><span class="c1">-- remove catalog records for missing files</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">EXPIRED</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VALIDATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VALIDATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">CHECK</span><span class="w"> </span><span class="n">LOGICAL</span><span class="p">;</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VALIDATE</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VALIDATE</span><span class="w"> </span><span class="n">BACKUPSET</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="catalog-management">📁 Catalog Management<a class="headerlink" href="#catalog-management" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">-- Create catalog (run as catalog user):</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">CREATE</span><span class="w"> </span><span class="k">CATALOG</span><span class="p">;</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1">-- Register target DB in catalog:</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">REGISTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1">-- Sync catalog with control file:</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">RESYNC</span><span class="w"> </span><span class="k">CATALOG</span><span class="p">;</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="c1">-- Remove a DB from catalog:</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">UNREGISTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="s1">&#39;ORCL&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="fra-management">🌊 FRA Management<a class="headerlink" href="#fra-management" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">DB_RECOVERY_FILE_DEST</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/u01/fra&#39;</span><span class="w"> </span><span class="k">SCOPE</span><span class="o">=</span><span class="k">BOTH</span><span class="p">;</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">DB_RECOVERY_FILE_DEST_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span><span class="k">G</span><span class="w"> </span><span class="k">SCOPE</span><span class="o">=</span><span class="k">BOTH</span><span class="p">;</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">DB_RECOVERY_FILE_DEST</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="k">SCOPE</span><span class="o">=</span><span class="k">BOTH</span><span class="p">;</span><span class="w">    </span><span class="c1">-- disable FRA</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">V$RECOVERY_FILE_DEST</span><span class="p">;</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">FILE_TYPE</span><span class="p">,</span><span class="w"> </span><span class="n">PERCENT_SPACE_USED</span><span class="p">,</span><span class="w"> </span><span class="n">PERCENT_SPACE_RECLAIMABLE</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="k">FROM</span><span class="w"> </span><span class="n">V$RECOVERY_AREA_USAGE</span><span class="p">;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="multiplexing">🔁 Multiplexing<a class="headerlink" href="#multiplexing" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1">-- Control files</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">NAME</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">V$CONTROLFILE</span><span class="p">;</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">CONTROL_FILES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/path/cf1.ctl&#39;</span><span class="p">,</span><span class="s1">&#39;/path/cf2.ctl&#39;</span><span class="w"> </span><span class="k">SCOPE</span><span class="o">=</span><span class="n">SPFILE</span><span class="p">;</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="c1">-- Redo log groups and members</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">GROUP</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">STATUS</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">V$LOG</span><span class="p">;</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">GROUP</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">MEMBER</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">V$LOGFILE</span><span class="p">;</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="n">LOGFILE</span><span class="w"> </span><span class="n">MEMBER</span><span class="w"> </span><span class="s1">&#39;/disk_b/redo01b.log&#39;</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="n">LOGFILE</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="mi">4</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">  </span><span class="p">(</span><span class="s1">&#39;/disk_a/redo04a.log&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;/disk_b/redo04b.log&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">SIZE</span><span class="w"> </span><span class="mi">200</span><span class="n">M</span><span class="p">;</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="n">LOGFILE</span><span class="w"> </span><span class="n">MEMBER</span><span class="w"> </span><span class="s1">&#39;/path/redo01a.log&#39;</span><span class="p">;</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="n">LOGFILE</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="n">SWITCH</span><span class="w"> </span><span class="n">LOGFILE</span><span class="p">;</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="k">CHECKPOINT</span><span class="p">;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="monitoring-views">📊 Monitoring Views<a class="headerlink" href="#monitoring-views" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>View</th>
+<th>What It Shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>V$RMAN_BACKUP_JOB_DETAILS</code></td>
+<td>Backup job history with status, timing</td>
+</tr>
+<tr>
+<td><code>V$RMAN_STATUS</code></td>
+<td>All RMAN operations (backup, restore, recover)</td>
+</tr>
+<tr>
+<td><code>V$BACKUP_SET</code></td>
+<td>Backup sets in the repository</td>
+</tr>
+<tr>
+<td><code>V$BACKUP_PIECE</code></td>
+<td>Individual backup piece files</td>
+</tr>
+<tr>
+<td><code>V$BACKUP_DATAFILE</code></td>
+<td>Datafiles in backup sets</td>
+</tr>
+<tr>
+<td><code>V$ARCHIVED_LOG</code></td>
+<td>Archive log history</td>
+</tr>
+<tr>
+<td><code>V$LOG</code></td>
+<td>Online redo log groups</td>
+</tr>
+<tr>
+<td><code>V$LOGFILE</code></td>
+<td>Online redo log members (physical files)</td>
+</tr>
+<tr>
+<td><code>V$CONTROLFILE</code></td>
+<td>Control file locations</td>
+</tr>
+<tr>
+<td><code>V$RECOVERY_FILE_DEST</code></td>
+<td>FRA usage summary</td>
+</tr>
+<tr>
+<td><code>V$RECOVERY_AREA_USAGE</code></td>
+<td>FRA usage breakdown by file type</td>
+</tr>
+<tr>
+<td><code>V$SESSION_LONGOPS</code></td>
+<td>Long-running ops (monitor live backup)</td>
+</tr>
+<tr>
+<td><code>RC_DATABASE</code></td>
+<td>Catalog: registered databases</td>
+</tr>
+<tr>
+<td><code>RC_BACKUP_SET</code></td>
+<td>Catalog: backup set history</td>
+</tr>
+<tr>
+<td><code>RC_ARCHIVED_LOG</code></td>
+<td>Catalog: archive log history</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="sample-production-nightly-backup-script">📅 Sample Production Nightly Backup Script<a class="headerlink" href="#sample-production-nightly-backup-script" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="ch">#!/bin/bash</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">ORACLE_SID</span><span class="o">=</span>ORCL
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">ORACLE_HOME</span><span class="o">=</span>/u01/app/oracle/product/19.3.0/dbhome_1
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$ORACLE_HOME</span>/bin:<span class="nv">$PATH</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="nv">LOGFILE</span><span class="o">=</span>/u01/rman_logs/backup_<span class="k">$(</span>date<span class="w"> </span>+%Y%m%d_%H%M<span class="k">)</span>.log
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>rman<span class="w"> </span>target<span class="w"> </span>/<span class="w"> </span><span class="nv">log</span><span class="o">=</span><span class="nv">$LOGFILE</span><span class="w"> </span>APPEND<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39;</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="s">RUN {</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="s">  BACKUP AS COMPRESSED BACKUPSET</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="s">    INCREMENTAL LEVEL 1</span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="s">    DATABASE PLUS ARCHIVELOG</span>
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="s">    FORMAT &#39;/u01/rman/%d_%T_%s_%p_%U&#39;</span>
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="s">    TAG &#39;nightly_incremental&#39;;</span>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="s">  DELETE NOPROMPT OBSOLETE;</span>
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="s">  DELETE NOPROMPT ARCHIVELOG ALL</span>
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="s">    BACKED UP 1 TIMES TO DISK</span>
+</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="s">    COMPLETED BEFORE &#39;SYSDATE-3&#39;;</span>
+</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="s">}</span>
+</span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="s">EXIT;</span>
+</span><span id="__span-13-21"><a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a><span class="s">EOF</span>
+</span></code></pre></div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.instant", "search.highlight", "search.suggest", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
