@@ -81,4 +81,27 @@ nav:
     - More Backup Options: 03-backup-commands/more-options.md
   - "4 · Consistent vs Inconsistent":
     - Backup Modes: 04-backup-types/consistent-inconsistent.md
+  - "5 · Reporting & Maintenance":
+    - Overview: 05-reporting-maintenance/index.md
+    - LIST Command: 05-reporting-maintenance/list-command.md
+    - REPORT Command: 05-reporting-maintenance/report-command.md
+    - Crosscheck & Delete: 05-reporting-maintenance/crosscheck-delete.md
+    - Block Corruption: 05-reporting-maintenance/block-corruption.md
+    - Block Change Tracking: 05-reporting-maintenance/bct.md
+    - Automated Backup: 05-reporting-maintenance/automated-backup.md
+    - Dynamic Views: 05-reporting-maintenance/dynamic-views.md
+  - "6 · Restore & Recovery":
+    - Overview: 06-restore-recover/index.md
+    - Restore vs Recover: 06-restore-recover/restore-vs-recover.md
+    - Complete vs Incomplete: 06-restore-recover/complete-incomplete.md
+    - Restore Points: 06-restore-recover/restore-points.md
+    - Redo Log Recovery: 06-restore-recover/redo-log-recovery.md
+  - "7 · Recovery Scenarios":
+    - Overview: 07-scenarios/index.md
+    - "Scenario 1: Dropped Tables": 07-scenarios/scenario1-dropped-tables.md
+    - "Scenario 2: Datafile Loss": 07-scenarios/scenario2-datafile-loss.md
+    - "Scenario 3: Tablespace Loss": 07-scenarios/scenario3-tablespace-loss.md
+    - "Scenario 4: Image Copy Recovery": 07-scenarios/scenario4-image-copy.md
+    - "Scenario 5: New Location": 07-scenarios/scenario5-new-location.md
+    - "Scenario 6: Redo Log Loss": 07-scenarios/scenario6-redo-log.md
   - Quick Reference: quick-reference.md

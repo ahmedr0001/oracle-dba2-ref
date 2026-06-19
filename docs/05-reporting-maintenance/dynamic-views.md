@@ -1,0 +1,140 @@
+---
+tags: [dynamic-views, v$, rc_, monitoring]
+---
+
+# Dynamic Views for RMAN Monitoring
+
+Two sets: `V$` views on the **target database** (always available), and `RC_` views in the **recovery catalog** (only when you use a catalog).
+
+---
+
+## V$ Views — On the Target Database
+
+```sql
+-- All RMAN backup jobs: status, start/end time, speed
+SELECT SESSION_KEY, INPUT_TYPE, STATUS,
+       TO_CHAR(START_TIME,'DD-MON-YYYY HH24:MI') AS STARTED,
+       TO_CHAR(END_TIME,'DD-MON-YYYY HH24:MI')   AS ENDED,
+       ELAPSED_SECONDS,
+       INPUT_BYTES_PER_SEC_DISPLAY AS SPEED
+FROM V$RMAN_BACKUP_JOB_DETAILS
+ORDER BY START_TIME DESC;
+
+-- All RMAN operations including restores and validates
+SELECT OPERATION, STATUS, START_TIME, END_TIME
+FROM V$RMAN_STATUS
+ORDER BY START_TIME DESC;
+
+-- All backup sets in the repository
+SELECT BS_KEY, BACKUP_TYPE, INCREMENTAL_LEVEL,
+       TO_CHAR(COMPLETION_TIME,'DD-MON-YYYY HH24:MI') AS COMPLETED,
+       STATUS
+FROM V$BACKUP_SET
+ORDER BY COMPLETION_TIME DESC;
+
+-- Physical backup piece files and their paths on disk
+SELECT BS_KEY, PIECE#, HANDLE AS FILE_PATH, STATUS, TAG, COMPRESSED
+FROM V$BACKUP_PIECE
+ORDER BY BS_KEY;
+
+-- Datafiles inside each backup set
+SELECT BS_KEY, FILE#, COMPLETION_TIME
+FROM V$BACKUP_DATAFILE
+ORDER BY COMPLETION_TIME DESC;
+
+-- Archive log history
+SELECT SEQUENCE#, NAME, FIRST_TIME, NEXT_TIME,
+       BLOCKS * BLOCK_SIZE / 1024 / 1024 AS SIZE_MB,
+       ARCHIVED, STATUS
+FROM V$ARCHIVED_LOG
+WHERE DEST_ID = 1
+ORDER BY SEQUENCE# DESC;
+
+-- Blocks found corrupt by VALIDATE (populated after VALIDATE DATABASE)
+SELECT FILE#, BLOCK#, BLOCKS, CORRUPTION_TYPE
+FROM V$DATABASE_BLOCK_CORRUPTION;
+
+-- Monitor a live running backup (run from another SQL*Plus session)
+SELECT SID, ROUND(SOFAR/TOTALWORK*100,1) AS PCT_DONE, MESSAGE, TIME_REMAINING
+FROM V$SESSION_LONGOPS
+WHERE OPNAME LIKE 'RMAN%'
+  AND TOTALWORK > 0
+  AND SOFAR < TOTALWORK;
+
+-- FRA total usage
+SELECT NAME,
+       SPACE_LIMIT/1024/1024/1024      AS LIMIT_GB,
+       SPACE_USED/1024/1024/1024       AS USED_GB,
+       SPACE_RECLAIMABLE/1024/1024/1024 AS RECLAIMABLE_GB
+FROM V$RECOVERY_FILE_DEST;
+
+-- FRA breakdown by file type
+SELECT FILE_TYPE, PERCENT_SPACE_USED, PERCENT_SPACE_RECLAIMABLE, NUMBER_OF_FILES
+FROM V$RECOVERY_AREA_USAGE;
+```
+
+---
+
+## RC_ Views — In the Recovery Catalog
+
+```sql
+-- Connect as catalog user first: sqlplus rmanadmin/pass@CatDB
+
+-- All databases registered in this catalog
+SELECT DB_KEY, DB_ID, NAME, RESETLOGS_TIME FROM RC_DATABASE;
+
+-- Backup set history for all registered databases
+SELECT DB_NAME, BS_KEY, BACKUP_TYPE, INCREMENTAL_LEVEL,
+       COMPLETION_TIME, STATUS
+FROM RC_BACKUP_SET
+ORDER BY COMPLETION_TIME DESC;
+
+-- Archive log records in the catalog
+SELECT DB_NAME, SEQUENCE#, FIRST_TIME, NEXT_TIME, STATUS
+FROM RC_ARCHIVED_LOG
+WHERE DB_NAME = 'ORCL'
+ORDER BY SEQUENCE# DESC;
+
+-- Datafile backup history
+SELECT DB_NAME, FILE#, COMPLETION_TIME, STATUS
+FROM RC_BACKUP_DATAFILE
+ORDER BY COMPLETION_TIME DESC;
+
+-- Tablespaces as RMAN sees them
+SELECT DB_KEY, NAME, STATUS FROM RC_TABLESPACE;
+```
+
+---
+
+## Quick Reference
+
+| Question | View |
+|---|---|
+| Did the last backup succeed? | `V$RMAN_BACKUP_JOB_DETAILS` |
+| What backup files are on disk? | `V$BACKUP_PIECE` |
+| Which blocks are corrupted? | `V$DATABASE_BLOCK_CORRUPTION` |
+| Is a backup running right now? | `V$SESSION_LONGOPS` |
+| How full is the FRA? | `V$RECOVERY_AREA_USAGE` |
+| What archive logs exist? | `V$ARCHIVED_LOG` |
+| What DBs are in the catalog? | `RC_DATABASE` |
+
+---
+
+## Section Commands Summary
+
+```sql
+-- V$ views
+SELECT SESSION_KEY, INPUT_TYPE, STATUS, START_TIME FROM V$RMAN_BACKUP_JOB_DETAILS;
+SELECT BS_KEY, BACKUP_TYPE, STATUS FROM V$BACKUP_SET;
+SELECT BS_KEY, HANDLE, STATUS, TAG FROM V$BACKUP_PIECE;
+SELECT SEQUENCE#, NAME, STATUS FROM V$ARCHIVED_LOG WHERE DEST_ID=1;
+SELECT FILE#, BLOCK#, CORRUPTION_TYPE FROM V$DATABASE_BLOCK_CORRUPTION;
+SELECT ROUND(SOFAR/TOTALWORK*100,1) PCT_DONE, MESSAGE FROM V$SESSION_LONGOPS
+  WHERE OPNAME LIKE 'RMAN%' AND SOFAR < TOTALWORK;
+SELECT FILE_TYPE, PERCENT_SPACE_USED FROM V$RECOVERY_AREA_USAGE;
+
+-- RC_ views (connect to catalog DB)
+SELECT DB_ID, NAME FROM RC_DATABASE;
+SELECT DB_NAME, BS_KEY, BACKUP_TYPE, STATUS FROM RC_BACKUP_SET;
+SELECT DB_NAME, SEQUENCE#, STATUS FROM RC_ARCHIVED_LOG WHERE DB_NAME='ORCL';
+```
