@@ -35,6 +35,24 @@ hide:
 <p>Cold/Hot backup modes, ARCHIVELOG vs NOARCHIVELOG matrix, when each is valid</p>
 </a>
 
+<a class="card" href="05-reporting-maintenance/">
+<div class="card-icon">📊</div>
+<h3>5 · Reporting & Maintenance</h3>
+<p>Automated backups, Block Corruption Tracking (BCT), Dynamic views, LIST, REPORT, Crosscheck & Delete</p>
+</a>
+
+<a class="card" href="06-restore-recover/">
+<div class="card-icon">♻️</div>
+<h3>6 · Restore & Recovery</h3>
+<p>Restore vs Recover, Complete & Incomplete Recovery, Redo Log Recovery, Restore Points</p>
+</a>
+
+<a class="card" href="07-scenarios/">
+<div class="card-icon">🎯</div>
+<h3>7 · Real-World Scenarios</h3>
+<p>Dropped tables, datafile loss, tablespace loss, image copies, relocating files, redo log recovery</p>
+</a>
+
 <a class="card" href="quick-reference/">
 <div class="card-icon">⚡</div>
 <h3>Quick Reference</h3>
