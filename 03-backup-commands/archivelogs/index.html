@@ -1034,33 +1034,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-back-up-archive-logs" class="md-nav__link">
+  <a href="#method-1-standalone-archive-log-backup" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why Back Up Archive Logs?
+        Method 1 — Standalone Archive Log Backup
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#method-1-backup-archivelog-standalone" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Method 1: BACKUP ARCHIVELOG (Standalone)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Method 1: BACKUP ARCHIVELOG (Standalone)">
+    <nav class="md-nav" aria-label="Method 1 — Standalone Archive Log Backup">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#back-up-all-available-archive-logs" class="md-nav__link">
+  <a href="#back-up-all-logs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Back Up All Available Archive Logs
+        Back Up All Logs
       
     </span>
   </a>
@@ -1068,10 +1057,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#filter-by-scn-system-change-number" class="md-nav__link">
+  <a href="#filter-by-scn" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Filter by SCN (System Change Number)
+        Filter by SCN
       
     </span>
   </a>
@@ -1106,10 +1095,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#method-2-backup-plus-archivelog" class="md-nav__link">
+  <a href="#method-2-plus-archivelog-recommended" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Method 2: BACKUP … PLUS ARCHIVELOG
+        Method 2 — PLUS ARCHIVELOG (Recommended)
       
     </span>
   </a>
@@ -1117,10 +1106,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#backup-archive-logs-not-yet-backed-up" class="md-nav__link">
+  <a href="#only-back-up-what-hasnt-been-backed-up-yet" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Backup Archive Logs Not Yet Backed Up
+        Only Back Up What Hasn't Been Backed Up Yet
       
     </span>
   </a>
@@ -1143,6 +1132,17 @@
     <span class="md-ellipsis">
       
         Delete Archive Logs Safely
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#section-commands-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section Commands Summary
       
     </span>
   </a>
@@ -1364,33 +1364,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-back-up-archive-logs" class="md-nav__link">
+  <a href="#method-1-standalone-archive-log-backup" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why Back Up Archive Logs?
+        Method 1 — Standalone Archive Log Backup
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#method-1-backup-archivelog-standalone" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Method 1: BACKUP ARCHIVELOG (Standalone)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Method 1: BACKUP ARCHIVELOG (Standalone)">
+    <nav class="md-nav" aria-label="Method 1 — Standalone Archive Log Backup">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#back-up-all-available-archive-logs" class="md-nav__link">
+  <a href="#back-up-all-logs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Back Up All Available Archive Logs
+        Back Up All Logs
       
     </span>
   </a>
@@ -1398,10 +1387,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#filter-by-scn-system-change-number" class="md-nav__link">
+  <a href="#filter-by-scn" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Filter by SCN (System Change Number)
+        Filter by SCN
       
     </span>
   </a>
@@ -1436,10 +1425,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#method-2-backup-plus-archivelog" class="md-nav__link">
+  <a href="#method-2-plus-archivelog-recommended" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Method 2: BACKUP … PLUS ARCHIVELOG
+        Method 2 — PLUS ARCHIVELOG (Recommended)
       
     </span>
   </a>
@@ -1447,10 +1436,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#backup-archive-logs-not-yet-backed-up" class="md-nav__link">
+  <a href="#only-back-up-what-hasnt-been-backed-up-yet" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Backup Archive Logs Not Yet Backed Up
+        Only Back Up What Hasn't Been Backed Up Yet
       
     </span>
   </a>
@@ -1473,6 +1462,17 @@
     <span class="md-ellipsis">
       
         Delete Archive Logs Safely
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#section-commands-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section Commands Summary
       
     </span>
   </a>
@@ -1522,141 +1522,158 @@
 
 
 <h1 id="backup-archived-redo-logs">Backup Archived Redo Logs<a class="headerlink" href="#backup-archived-redo-logs" title="Permanent link">&para;</a></h1>
-<h2 id="why-back-up-archive-logs">Why Back Up Archive Logs?<a class="headerlink" href="#why-back-up-archive-logs" title="Permanent link">&para;</a></h2>
-<p>Archive logs are the <strong>bridge between a backup and the present</strong>. When you restore a datafile from last Sunday's backup and the database crashed today (Wednesday), you need every archive log from Sunday through Wednesday to bring the database forward to the moment of failure.</p>
-<p>Without archive log backups:
-- Your restore point = the age of your last backup
-- All work done since that backup is <strong>permanently lost</strong></p>
+<p>Archive logs are the bridge between a backup and the present. When you restore last Sunday's backup and the crash happened Wednesday, archive logs carry every transaction from Sunday to Wednesday — without them, that work is gone forever.</p>
 <hr />
-<h2 id="method-1-backup-archivelog-standalone">Method 1: BACKUP ARCHIVELOG (Standalone)<a class="headerlink" href="#method-1-backup-archivelog-standalone" title="Permanent link">&para;</a></h2>
-<h3 id="back-up-all-available-archive-logs">Back Up All Available Archive Logs<a class="headerlink" href="#back-up-all-available-archive-logs" title="Permanent link">&para;</a></h3>
+<h2 id="method-1-standalone-archive-log-backup">Method 1 — Standalone Archive Log Backup<a class="headerlink" href="#method-1-standalone-archive-log-backup" title="Permanent link">&para;</a></h2>
+<h3 id="back-up-all-logs">Back Up All Logs<a class="headerlink" href="#back-up-all-logs" title="Permanent link">&para;</a></h3>
 <div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">-- Back up all archive logs currently on disk</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">-- Back up all archive logs AND delete them from disk after backup</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1">-- (frees disk space, keeps them in the backup repository)</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">INPUT</span><span class="p">;</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1">-- Delete only archive logs that have already been backed up</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="k">INPUT</span><span class="p">;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">-- Back up and delete from disk after (saves space, keeps record in RMAN)</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">INPUT</span><span class="p">;</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1">-- Back up and delete only the files just backed up in this command</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="k">INPUT</span><span class="p">;</span>
 </span></code></pre></div>
-<div class="admonition info">
-<p class="admonition-title">DELETE INPUT vs DELETE ALL INPUT</p>
-<ul>
-<li><code>DELETE INPUT</code> — deletes only the specific archive log files that were just backed up in this command</li>
-<li><code>DELETE ALL INPUT</code> — deletes all archive log copies (all destinations) after backing up</li>
-</ul>
-</div>
 <hr />
-<h3 id="filter-by-scn-system-change-number">Filter by SCN (System Change Number)<a class="headerlink" href="#filter-by-scn-system-change-number" title="Permanent link">&para;</a></h3>
-<p>SCN is Oracle's internal version counter — every committed transaction gets a unique SCN. Use SCN-based filters for precise recovery point control.</p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">-- Archive logs from SCN 1000 onwards</span>
+<h3 id="filter-by-scn">Filter by SCN<a class="headerlink" href="#filter-by-scn" title="Permanent link">&para;</a></h3>
+<p>SCN (System Change Number) is Oracle's internal transaction counter. Every commit gets a unique SCN.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">-- Back up logs from SCN 1000 onwards</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">SCN</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">-- Archive logs up to SCN 2000</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">-- Back up logs up to SCN 2000</span>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">UNTIL</span><span class="w"> </span><span class="n">SCN</span><span class="w"> </span><span class="mi">2000</span><span class="p">;</span>
 </span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">-- Archive logs between two SCNs (inclusive)</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">-- Back up logs in a specific SCN range</span>
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">SCN</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="k">UNTIL</span><span class="w"> </span><span class="n">SCN</span><span class="w"> </span><span class="mi">2000</span><span class="p">;</span>
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1">-- Equivalent BETWEEN syntax</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1">-- Alternative syntax</span>
 </span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="n">SCN</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">2000</span><span class="p">;</span>
 </span></code></pre></div>
-<p><strong>Find the current SCN:</strong>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">CURRENT_SCN</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">V$DATABASE</span><span class="p">;</span>
-</span></code></pre></div></p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">-- Find the current SCN</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">CURRENT_SCN</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">V$DATABASE</span><span class="p">;</span>
+</span></code></pre></div>
 <hr />
 <h3 id="filter-by-sequence-number">Filter by Sequence Number<a class="headerlink" href="#filter-by-sequence-number" title="Permanent link">&para;</a></h3>
-<p>Archive logs are numbered sequentially. Use sequence numbers when you know exactly which logs you need.</p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">-- From sequence 100 onwards</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">-- Back up from sequence 100 onwards</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1">-- From sequence 100 to 200 (inclusive)</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1">-- Back up a specific range</span>
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="k">UNTIL</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span>
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1">-- Between syntax</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1">-- Alternative syntax</span>
 </span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span>
 </span></code></pre></div>
-<p><strong>Find archive log sequence numbers:</strong>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">NAME</span><span class="p">,</span><span class="w"> </span><span class="n">FIRST_TIME</span><span class="p">,</span><span class="w"> </span><span class="n">NEXT_TIME</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">V$ARCHIVED_LOG</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">DEST_ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="o">#</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
-</span></code></pre></div></p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">-- Find sequence numbers</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">NAME</span><span class="p">,</span><span class="w"> </span><span class="n">FIRST_TIME</span><span class="p">,</span><span class="w"> </span><span class="n">NEXT_TIME</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">FROM</span><span class="w"> </span><span class="n">V$ARCHIVED_LOG</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">DEST_ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="o">#</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+</span></code></pre></div>
 <hr />
 <h3 id="filter-by-time">Filter by Time<a class="headerlink" href="#filter-by-time" title="Permanent link">&para;</a></h3>
-<p>Use time-based filters when you think in terms of "last night" or "before the incident":</p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">-- Archive logs generated in the last 24 hours</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">-- Back up logs from the last 24 hours</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="s1">&#39;SYSDATE-1&#39;</span><span class="p">;</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1">-- Archive logs up to a specific date/time</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1">-- Back up logs up to a specific date</span>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">UNTIL</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="ss">&quot;TO_DATE(&#39;18/06/2026&#39;,&#39;DD/MM/YYYY&#39;)&quot;</span><span class="p">;</span>
 </span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1">-- Archive logs in a specific time window</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1">-- Back up logs in a specific time window</span>
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span>
 </span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">      </span><span class="k">FROM</span><span class="w">  </span><span class="k">TIME</span><span class="w"> </span><span class="ss">&quot;TO_DATE(&#39;17/06/2026 20:00&#39;,&#39;DD/MM/YYYY HH24:MI&#39;)&quot;</span>
 </span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">      </span><span class="k">UNTIL</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="ss">&quot;TO_DATE(&#39;18/06/2026 06:00&#39;,&#39;DD/MM/YYYY HH24:MI&#39;)&quot;</span><span class="p">;</span>
 </span></code></pre></div>
 <hr />
-<h2 id="method-2-backup-plus-archivelog">Method 2: BACKUP … PLUS ARCHIVELOG<a class="headerlink" href="#method-2-backup-plus-archivelog" title="Permanent link">&para;</a></h2>
-<p>The <code>PLUS ARCHIVELOG</code> clause adds archive log backup to any backup command. This is the <strong>recommended approach</strong> for complete backups because it ensures datafiles and their corresponding archive logs are backed up together.</p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">-- Whole database + all archive logs (most common production backup)</span>
+<h2 id="method-2-plus-archivelog-recommended">Method 2 — PLUS ARCHIVELOG (Recommended)<a class="headerlink" href="#method-2-plus-archivelog-recommended" title="Permanent link">&para;</a></h2>
+<p>Adds archive log backup automatically to any database backup command.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">-- Whole database + archive logs (most common production command)</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1">-- Compressed + archive logs</span>
 </span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">COMPRESSED</span><span class="w"> </span><span class="n">BACKUPSET</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1">-- Tablespace + its archive logs</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1">-- Tablespace + archive logs</span>
 </span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
 </span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
 </span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1">-- Incremental + archive logs</span>
 </span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">INCREMENTAL</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
 </span></code></pre></div>
-<p><strong>Execution sequence of <code>BACKUP DATABASE PLUS ARCHIVELOG</code>:</strong></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>1. ALTER SYSTEM SWITCH LOGFILE        ← archive the current online log
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>2. BACKUP ARCHIVELOG ALL              ← back up all archive logs
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>3. BACKUP DATABASE                    ← back up datafiles
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>4. ALTER SYSTEM SWITCH LOGFILE        ← archive logs generated during backup
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>5. BACKUP ARCHIVELOG ALL              ← back up those new logs
-</span></code></pre></div>
-<p>This sequence guarantees that after restore, you have everything needed to bring the database to a consistent state.</p>
 <hr />
-<h2 id="backup-archive-logs-not-yet-backed-up">Backup Archive Logs Not Yet Backed Up<a class="headerlink" href="#backup-archive-logs-not-yet-backed-up" title="Permanent link">&para;</a></h2>
-<p>Avoid re-backing up the same archive logs in incremental/frequent schedules:</p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">-- Only back up archive logs that haven&#39;t been backed up yet</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">BACKED</span><span class="w"> </span><span class="n">UP</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">TIMES</span><span class="p">;</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1">-- Not backed up more than once (if you want dual copies)</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">BACKED</span><span class="w"> </span><span class="n">UP</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">TIMES</span><span class="p">;</span>
+<h2 id="only-back-up-what-hasnt-been-backed-up-yet">Only Back Up What Hasn't Been Backed Up Yet<a class="headerlink" href="#only-back-up-what-hasnt-been-backed-up-yet" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">-- Skip archive logs already backed up once</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">BACKED</span><span class="w"> </span><span class="n">UP</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">TIMES</span><span class="p">;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1">-- Skip logs backed up at least twice (use when you want dual copies)</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">BACKED</span><span class="w"> </span><span class="n">UP</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">TIMES</span><span class="p">;</span>
 </span></code></pre></div>
 <hr />
 <h2 id="list-and-validate-archive-log-backups">List and Validate Archive Log Backups<a class="headerlink" href="#list-and-validate-archive-log-backups" title="Permanent link">&para;</a></h2>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">-- List all archive log backups in repository</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">LIST</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1">-- List backup of specific sequence range</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">LIST</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="n">ARCHIVELOG</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">      </span><span class="k">FROM</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="k">UNTIL</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="mi">120</span><span class="p">;</span>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="c1">-- Cross-check repository against actual files on disk</span>
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CROSSCHECK</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span>
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>
-</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="c1">-- Mark missing archive logs as EXPIRED</span>
-</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="c1">-- (files referenced in catalog that don&#39;t exist on disk)</span>
-</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">EXPIRED</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">-- List all archive log backups in RMAN repository</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">LIST</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1">-- List backup of a specific range</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">LIST</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="k">UNTIL</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="mi">120</span><span class="p">;</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1">-- Cross-check: verify archive log files actually exist on disk</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CROSSCHECK</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="c1">-- Delete catalog records for archive logs that no longer exist on disk</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">EXPIRED</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span>
 </span></code></pre></div>
 <hr />
 <h2 id="delete-archive-logs-safely">Delete Archive Logs Safely<a class="headerlink" href="#delete-archive-logs-safely" title="Permanent link">&para;</a></h2>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">-- Delete all archive logs (use cautiously — check retention first)</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">NOPROMPT</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1">-- Delete archive logs older than N days</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">NOPROMPT</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">      </span><span class="n">COMPLETED</span><span class="w"> </span><span class="k">BEFORE</span><span class="w"> </span><span class="s1">&#39;SYSDATE-7&#39;</span><span class="p">;</span>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="c1">-- Delete only archive logs that are already backed up</span>
-</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">NOPROMPT</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span>
-</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">      </span><span class="n">BACKED</span><span class="w"> </span><span class="n">UP</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">TIMES</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">DISK</span><span class="p">;</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">-- Delete all (use with caution)</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">NOPROMPT</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1">-- Delete logs older than 7 days</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">NOPROMPT</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">COMPLETED</span><span class="w"> </span><span class="k">BEFORE</span><span class="w"> </span><span class="s1">&#39;SYSDATE-7&#39;</span><span class="p">;</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="c1">-- Delete only logs already backed up</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">NOPROMPT</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">BACKED</span><span class="w"> </span><span class="n">UP</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">TIMES</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">DISK</span><span class="p">;</span>
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Never use 'rm' on archive logs</p>
+<p>Always delete through RMAN so it updates its repository.</p>
+</div>
+<hr />
+<h2 id="section-commands-summary">Section Commands Summary<a class="headerlink" href="#section-commands-summary" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">-- Backup all</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="k">INPUT</span><span class="p">;</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">INPUT</span><span class="p">;</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">BACKED</span><span class="w"> </span><span class="n">UP</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">TIMES</span><span class="p">;</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1">-- By SCN</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">SCN</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">UNTIL</span><span class="w"> </span><span class="n">SCN</span><span class="w"> </span><span class="mi">2000</span><span class="p">;</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="n">SCN</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">2000</span><span class="p">;</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="c1">-- By sequence</span>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="k">UNTIL</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span>
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span>
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="c1">-- By time</span>
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="s1">&#39;SYSDATE-1&#39;</span><span class="p">;</span>
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">UNTIL</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="ss">&quot;TO_DATE(&#39;18/06/2026&#39;,&#39;DD/MM/YYYY&#39;)&quot;</span><span class="p">;</span>
+</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>
+</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="c1">-- With DB backup</span>
+</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
+</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
+</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">INCREMENTAL</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
+</span><span id="__span-10-25"><a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>
+</span><span id="__span-10-26"><a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a><span class="c1">-- List / validate</span>
+</span><span id="__span-10-27"><a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">LIST</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span>
+</span><span id="__span-10-28"><a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CROSSCHECK</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span>
+</span><span id="__span-10-29"><a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">EXPIRED</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span>
+</span><span id="__span-10-30"><a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a>
+</span><span id="__span-10-31"><a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a><span class="c1">-- Delete</span>
+</span><span id="__span-10-32"><a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">NOPROMPT</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">COMPLETED</span><span class="w"> </span><span class="k">BEFORE</span><span class="w"> </span><span class="s1">&#39;SYSDATE-7&#39;</span><span class="p">;</span>
+</span><span id="__span-10-33"><a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">NOPROMPT</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">BACKED</span><span class="w"> </span><span class="n">UP</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">TIMES</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">DISK</span><span class="p">;</span>
+</span><span id="__span-10-34"><a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a>
+</span><span id="__span-10-35"><a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a><span class="c1">-- Find current SCN and sequence numbers</span>
+</span><span id="__span-10-36"><a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">CURRENT_SCN</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">V$DATABASE</span><span class="p">;</span>
+</span><span id="__span-10-37"><a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">NAME</span><span class="p">,</span><span class="w"> </span><span class="n">FIRST_TIME</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">V$ARCHIVED_LOG</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">DEST_ID</span><span class="o">=</span><span class="mi">1</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="o">#</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
 </span></code></pre></div>
 
 

@@ -2,86 +2,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/quick-reference/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/01-rman-intro/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/01-rman-intro/catalog-db/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/01-rman-intro/rman-architecture/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/01-rman-intro/rman-configuration/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/01-rman-intro/rman-connections/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/01-rman-intro/rpo-rto/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/01-rman-intro/why-backup/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/02-backup-types/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/02-backup-types/archivelog/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/02-backup-types/fra/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/02-backup-types/multiplexing/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/03-backup-commands/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/03-backup-commands/archivelogs/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/03-backup-commands/backup-as-copy/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/03-backup-commands/backup-types/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/03-backup-commands/controlfile/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/03-backup-commands/more-options/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/03-backup-commands/whole-partial/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
     <url>
          <loc>https://YOUR_GITHUB_USERNAME.github.io/oracle-dba2-ref/04-backup-types/consistent-inconsistent/</loc>
-         <lastmod>2026-06-18</lastmod>
+         <lastmod>2026-06-19</lastmod>
     </url>
 </urlset>

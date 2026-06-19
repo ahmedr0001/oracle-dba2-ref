@@ -805,17 +805,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-concept" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Concept
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#control-file-multiplexing" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -867,17 +856,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#redo-log-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Redo Log Concepts
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#check-current-redo-logs" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -903,7 +881,7 @@
   <a href="#add-a-new-group-with-members" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Add a New Group (with Members)
+        Add a New Group (With Members)
       
     </span>
   </a>
@@ -933,10 +911,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#force-a-log-switch" class="md-nav__link">
+  <a href="#force-log-switch-and-checkpoint" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Force a Log Switch
+        Force Log Switch and Checkpoint
       
     </span>
   </a>
@@ -949,10 +927,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#recommended-multiplexing-layout" class="md-nav__link">
+  <a href="#section-commands-summary" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Recommended Multiplexing Layout
+        Section Commands Summary
       
     </span>
   </a>
@@ -1403,17 +1381,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-concept" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Concept
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#control-file-multiplexing" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1465,17 +1432,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#redo-log-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Redo Log Concepts
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#check-current-redo-logs" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1501,7 +1457,7 @@
   <a href="#add-a-new-group-with-members" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Add a New Group (with Members)
+        Add a New Group (With Members)
       
     </span>
   </a>
@@ -1531,10 +1487,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#force-a-log-switch" class="md-nav__link">
+  <a href="#force-log-switch-and-checkpoint" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Force a Log Switch
+        Force Log Switch and Checkpoint
       
     </span>
   </a>
@@ -1547,10 +1503,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#recommended-multiplexing-layout" class="md-nav__link">
+  <a href="#section-commands-summary" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Recommended Multiplexing Layout
+        Section Commands Summary
       
     </span>
   </a>
@@ -1600,98 +1556,57 @@
 
 
 <h1 id="multiplexing">Multiplexing<a class="headerlink" href="#multiplexing" title="Permanent link">&para;</a></h1>
-<h2 id="the-concept">The Concept<a class="headerlink" href="#the-concept" title="Permanent link">&para;</a></h2>
-<p><strong>Multiplexing</strong> means keeping multiple identical copies of a critical Oracle file on different disks simultaneously. If one disk fails, Oracle continues using the copies on the surviving disks — with zero downtime and zero data loss.</p>
-<p>Two files must be multiplexed:</p>
-<table>
-<thead>
-<tr>
-<th>File</th>
-<th>Why It's Critical</th>
-<th>Minimum Copies</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Control File</strong></td>
-<td>Losing all copies = database cannot mount</td>
-<td>2 (Oracle default), 3 recommended</td>
-</tr>
-<tr>
-<td><strong>Redo Log Members</strong></td>
-<td>Losing all members of a group = data loss</td>
-<td>2 members per group, 3 groups recommended</td>
-</tr>
-</tbody>
-</table>
+<p>Multiplexing = keeping multiple identical copies of a critical file on <strong>different physical disks</strong>. If one disk fails, Oracle keeps running using the copies on the other disks — no downtime, no data loss.</p>
+<p>Two files must be multiplexed: <strong>control files</strong> and <strong>redo log members</strong>.</p>
 <hr />
 <h2 id="control-file-multiplexing">Control File Multiplexing<a class="headerlink" href="#control-file-multiplexing" title="Permanent link">&para;</a></h2>
+<p>The control file is Oracle's master index. Lose all copies → database cannot mount. Recommended: 3 copies on 3 different disks.</p>
 <h3 id="check-current-control-files">Check Current Control Files<a class="headerlink" href="#check-current-control-files" title="Permanent link">&para;</a></h3>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">-- From SQL*Plus (connected as SYSDBA)</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">-- Show paths of all current control files</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">SHOW</span><span class="w"> </span><span class="k">PARAMETER</span><span class="w"> </span><span class="n">CONTROL_FILES</span><span class="p">;</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">-- Or query the view</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">-- Alternative view</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">NAME</span><span class="p">,</span><span class="w"> </span><span class="n">STATUS</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">V$CONTROLFILE</span><span class="p">;</span>
 </span></code></pre></div>
 <h3 id="add-a-control-file-copy">Add a Control File Copy<a class="headerlink" href="#add-a-control-file-copy" title="Permanent link">&para;</a></h3>
-<p>Oracle doesn't have an <code>ADD CONTROLFILE</code> command — you configure the parameter and copy the file at OS level:</p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">-- Step 1: Check current location(s)</span>
+<p>Oracle has no <code>ADD CONTROLFILE</code> command. You update the parameter and copy the file at OS level:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">-- Step 1: check current locations</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">SHOW</span><span class="w"> </span><span class="k">PARAMETER</span><span class="w"> </span><span class="n">CONTROL_FILES</span><span class="p">;</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">-- Step 2: Shut down cleanly</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">-- Step 2: clean shutdown (never use ABORT here)</span>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">SHUTDOWN</span><span class="w"> </span><span class="k">IMMEDIATE</span><span class="p">;</span>
 </span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Step 3: Copy the control file to the new location (Linux)</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Step 3: copy the control file to new location(s) at OS level</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>cp<span class="w"> </span>/u01/oradata/ORCL/control01.ctl<span class="w"> </span>/u02/oradata/ORCL/control02.ctl
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>cp<span class="w"> </span>/u01/oradata/ORCL/control01.ctl<span class="w"> </span>/u03/oradata/ORCL/control03.ctl
 </span></code></pre></div>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">-- Step 4: Update the parameter (SPFILE)</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">-- Step 4: tell Oracle about all copies (SPFILE = persistent, survives restart)</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">CONTROL_FILES</span><span class="w"> </span><span class="o">=</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="s1">&#39;/u01/oradata/ORCL/control01.ctl&#39;</span><span class="p">,</span>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="s1">&#39;/u02/oradata/ORCL/control02.ctl&#39;</span><span class="p">,</span>
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="s1">&#39;/u03/oradata/ORCL/control03.ctl&#39;</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="k">SCOPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SPFILE</span><span class="p">;</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="k">SCOPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SPFILE</span><span class="p">;</span><span class="w">   </span><span class="c1">-- cannot use BOTH here; requires restart</span>
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1">-- Step 5: Restart</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1">-- Step 5: restart so Oracle reads the new SPFILE parameter</span>
 </span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="n">STARTUP</span><span class="p">;</span>
 </span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="c1">-- Step 6: Verify</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="c1">-- Step 6: verify all three copies are now listed</span>
 </span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">NAME</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">V$CONTROLFILE</span><span class="p">;</span>
 </span></code></pre></div>
-<div class="admonition tip">
-<p class="admonition-title">One control file can recover the other</p>
-<p>If you lose one control file, copy a surviving one to replace the lost file path, update the parameter if needed, and restart. The database will use the recovered copy.</p>
-</div>
 <hr />
 <h2 id="redo-log-multiplexing">Redo Log Multiplexing<a class="headerlink" href="#redo-log-multiplexing" title="Permanent link">&para;</a></h2>
-<h3 id="redo-log-concepts">Redo Log Concepts<a class="headerlink" href="#redo-log-concepts" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Log Group Structure:
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>─────────────────────────────────────────────────────
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Group 1 ──► Member 1A: /disk_a/redo01a.log  ┐
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>            Member 1B: /disk_b/redo01b.log  ┘ identical copies
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>Group 2 ──► Member 2A: /disk_a/redo02a.log  ┐
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>            Member 2B: /disk_b/redo02b.log  ┘ identical copies
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>Group 3 ──► Member 3A: /disk_a/redo03a.log  ┐
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>            Member 3B: /disk_b/redo03b.log  ┘ identical copies
-</span></code></pre></div>
-<ul>
-<li><strong>Group</strong> = logical redo log unit — Oracle writes to one group at a time</li>
-<li><strong>Member</strong> = a physical redo log file — all members in a group are written simultaneously</li>
-<li>Oracle writes to groups in rotation: G1 → G2 → G3 → G1 → ...</li>
-<li><strong>Recommended:</strong> 3 groups, 2 members each, on separate disks</li>
-</ul>
+<p>Each <strong>group</strong> has one or more <strong>members</strong> (physical files). Oracle writes to all members of the current group simultaneously. If one member's disk fails, Oracle uses the surviving member — no data loss.</p>
+<p>Recommended: 3 groups, 2 members each, members on separate disks.</p>
 <h3 id="check-current-redo-logs">Check Current Redo Logs<a class="headerlink" href="#check-current-redo-logs" title="Permanent link">&para;</a></h3>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">-- View groups and their status</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">GROUP</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">BYTES</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">SIZE_MB</span><span class="p">,</span><span class="w"> </span><span class="n">MEMBERS</span><span class="p">,</span><span class="w"> </span><span class="n">STATUS</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">FROM</span><span class="w"> </span><span class="n">V$LOG</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">GROUP</span><span class="o">#</span><span class="p">;</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1">-- View members (physical files) for each group</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">GROUP</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">MEMBER</span><span class="p">,</span><span class="w"> </span><span class="n">STATUS</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="k">FROM</span><span class="w"> </span><span class="n">V$LOGFILE</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">GROUP</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">MEMBER</span><span class="p">;</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">-- View groups: which is current, size, how many members</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">GROUP</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">BYTES</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">SIZE_MB</span><span class="p">,</span><span class="w"> </span><span class="n">MEMBERS</span><span class="p">,</span><span class="w"> </span><span class="n">STATUS</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">FROM</span><span class="w"> </span><span class="n">V$LOG</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">GROUP</span><span class="o">#</span><span class="p">;</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1">-- View members: physical file paths per group</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">GROUP</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">MEMBER</span><span class="p">,</span><span class="w"> </span><span class="n">STATUS</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="k">FROM</span><span class="w"> </span><span class="n">V$LOGFILE</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">GROUP</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">MEMBER</span><span class="p">;</span>
 </span></code></pre></div>
 <p><strong>V$LOG STATUS values:</strong></p>
 <table>
@@ -1704,78 +1619,96 @@
 <tbody>
 <tr>
 <td><code>CURRENT</code></td>
-<td>Oracle is actively writing to this group</td>
+<td>Oracle is writing to this group right now</td>
 </tr>
 <tr>
 <td><code>ACTIVE</code></td>
-<td>Used but not yet archived (needed for recovery)</td>
+<td>Used but not yet archived — needed for crash recovery</td>
 </tr>
 <tr>
 <td><code>INACTIVE</code></td>
-<td>Archived — safe to reuse</td>
+<td>Archived — safe to reuse or drop</td>
 </tr>
 <tr>
 <td><code>UNUSED</code></td>
-<td>Never been written to (brand new group)</td>
+<td>Brand new group, never written to</td>
 </tr>
 </tbody>
 </table>
 <h3 id="add-a-member-to-an-existing-group">Add a Member to an Existing Group<a class="headerlink" href="#add-a-member-to-an-existing-group" title="Permanent link">&para;</a></h3>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">-- Add a second member to Group 1 (multiplexing it)</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="n">LOGFILE</span><span class="w"> </span><span class="n">MEMBER</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="s1">&#39;/u02/oradata/ORCL/redo01b.log&#39;</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="k">TO</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="c1">-- Add members to multiple groups at once</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="n">LOGFILE</span><span class="w"> </span><span class="n">MEMBER</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="s1">&#39;/u02/oradata/ORCL/redo01b.log&#39;</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span><span class="s1">&#39;/u02/oradata/ORCL/redo02b.log&#39;</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
-</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">  </span><span class="s1">&#39;/u02/oradata/ORCL/redo03b.log&#39;</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">-- Add a second member to Group 1 (now it has 2 copies on different disks)</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="n">LOGFILE</span><span class="w"> </span><span class="n">MEMBER</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="s1">&#39;/u02/oradata/ORCL/redo01b.log&#39;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="k">TO</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1">-- Add members to multiple groups in one command</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="n">LOGFILE</span><span class="w"> </span><span class="n">MEMBER</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">  </span><span class="s1">&#39;/u02/oradata/ORCL/redo01b.log&#39;</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">  </span><span class="s1">&#39;/u02/oradata/ORCL/redo02b.log&#39;</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">  </span><span class="s1">&#39;/u02/oradata/ORCL/redo03b.log&#39;</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
 </span></code></pre></div>
-<h3 id="add-a-new-group-with-members">Add a New Group (with Members)<a class="headerlink" href="#add-a-new-group-with-members" title="Permanent link">&para;</a></h3>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">-- Add a completely new group with 2 members</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="n">LOGFILE</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="mi">4</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="p">(</span><span class="s1">&#39;/u01/oradata/ORCL/redo04a.log&#39;</span><span class="p">,</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">   </span><span class="s1">&#39;/u02/oradata/ORCL/redo04b.log&#39;</span><span class="p">)</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="k">SIZE</span><span class="w"> </span><span class="mi">200</span><span class="n">M</span><span class="p">;</span>
+<h3 id="add-a-new-group-with-members">Add a New Group (With Members)<a class="headerlink" href="#add-a-new-group-with-members" title="Permanent link">&para;</a></h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">-- Add a completely new group with 2 members from the start</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="n">LOGFILE</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="mi">4</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="p">(</span><span class="s1">&#39;/u01/oradata/ORCL/redo04a.log&#39;</span><span class="p">,</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">   </span><span class="s1">&#39;/u02/oradata/ORCL/redo04b.log&#39;</span><span class="p">)</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="k">SIZE</span><span class="w"> </span><span class="mi">200</span><span class="n">M</span><span class="p">;</span>
 </span></code></pre></div>
 <h3 id="drop-a-log-member">Drop a Log Member<a class="headerlink" href="#drop-a-log-member" title="Permanent link">&para;</a></h3>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">-- Drop a specific member (group must have other members)</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="n">LOGFILE</span><span class="w"> </span><span class="n">MEMBER</span><span class="w"> </span><span class="s1">&#39;/u01/oradata/ORCL/redo01a.log&#39;</span><span class="p">;</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1">-- Note: you cannot drop the CURRENT group&#39;s members</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1">-- Switch the log first if needed:</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="n">SWITCH</span><span class="w"> </span><span class="n">LOGFILE</span><span class="p">;</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">-- Drop one member from a group (group must have other members remaining)</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="n">LOGFILE</span><span class="w"> </span><span class="n">MEMBER</span><span class="w"> </span><span class="s1">&#39;/u01/oradata/ORCL/redo01a.log&#39;</span><span class="p">;</span>
 </span></code></pre></div>
 <h3 id="drop-a-log-group">Drop a Log Group<a class="headerlink" href="#drop-a-log-group" title="Permanent link">&para;</a></h3>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">-- Drop entire group (must not be CURRENT or ACTIVE)</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="n">LOGFILE</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1">-- Then delete the physical file from OS:</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1">-- rm /u01/oradata/ORCL/redo04a.log</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="c1">-- rm /u02/oradata/ORCL/redo04b.log</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">-- Drop entire group — must not be CURRENT or ACTIVE</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1">-- Force a log switch first if needed to get it to INACTIVE</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="n">SWITCH</span><span class="w"> </span><span class="n">LOGFILE</span><span class="p">;</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1">-- Then drop the group</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="n">LOGFILE</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
 </span></code></pre></div>
-<h3 id="force-a-log-switch">Force a Log Switch<a class="headerlink" href="#force-a-log-switch" title="Permanent link">&para;</a></h3>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">-- Force Oracle to switch to the next group (and archive the current)</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="n">SWITCH</span><span class="w"> </span><span class="n">LOGFILE</span><span class="p">;</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1">-- Force a checkpoint (flush dirty blocks to disk)</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="k">CHECKPOINT</span><span class="p">;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Then delete the physical files from disk (Oracle doesn&#39;t do this automatically)</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>rm<span class="w"> </span>/u01/oradata/ORCL/redo04a.log
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>rm<span class="w"> </span>/u02/oradata/ORCL/redo04b.log
+</span></code></pre></div>
+<h3 id="force-log-switch-and-checkpoint">Force Log Switch and Checkpoint<a class="headerlink" href="#force-log-switch-and-checkpoint" title="Permanent link">&para;</a></h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">-- Force Oracle to stop writing to the current log and move to the next</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c1">-- This also triggers archiving of the current log</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="n">SWITCH</span><span class="w"> </span><span class="n">LOGFILE</span><span class="p">;</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1">-- Force a checkpoint: flush all dirty blocks from memory to disk</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="k">CHECKPOINT</span><span class="p">;</span>
 </span></code></pre></div>
 <hr />
-<h2 id="recommended-multiplexing-layout">Recommended Multiplexing Layout<a class="headerlink" href="#recommended-multiplexing-layout" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Disk A          Disk B          Disk C (optional)
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>────────        ────────        ─────────────────
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>control01.ctl   control02.ctl   control03.ctl
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>redo01a.log     redo01b.log
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>redo02a.log     redo02b.log
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>redo03a.log     redo03b.log
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>datafiles...    (different path)
+<h2 id="section-commands-summary">Section Commands Summary<a class="headerlink" href="#section-commands-summary" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1">-- Control file</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="k">SHOW</span><span class="w"> </span><span class="k">PARAMETER</span><span class="w"> </span><span class="n">CONTROL_FILES</span><span class="p">;</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">NAME</span><span class="p">,</span><span class="w"> </span><span class="n">STATUS</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">V$CONTROLFILE</span><span class="p">;</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="n">SHUTDOWN</span><span class="w"> </span><span class="k">IMMEDIATE</span><span class="p">;</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="c1">-- (cp files at OS level)</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">CONTROL_FILES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/path/cf1.ctl&#39;</span><span class="p">,</span><span class="s1">&#39;/path/cf2.ctl&#39;</span><span class="w"> </span><span class="k">SCOPE</span><span class="o">=</span><span class="n">SPFILE</span><span class="p">;</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="n">STARTUP</span><span class="p">;</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="c1">-- Redo log groups and members</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">GROUP</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">MEMBERS</span><span class="p">,</span><span class="w"> </span><span class="n">STATUS</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">V$LOG</span><span class="p">;</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">GROUP</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">MEMBER</span><span class="p">,</span><span class="w"> </span><span class="n">STATUS</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">V$LOGFILE</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">GROUP</span><span class="o">#</span><span class="p">;</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="c1">-- Add member to existing group</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="n">LOGFILE</span><span class="w"> </span><span class="n">MEMBER</span><span class="w"> </span><span class="s1">&#39;/disk_b/redo01b.log&#39;</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="c1">-- Add new group with members</span>
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="n">LOGFILE</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="mi">4</span>
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">  </span><span class="p">(</span><span class="s1">&#39;/disk_a/redo04a.log&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;/disk_b/redo04b.log&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">SIZE</span><span class="w"> </span><span class="mi">200</span><span class="n">M</span><span class="p">;</span>
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>
+</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="c1">-- Drop member (group must have others)</span>
+</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="n">LOGFILE</span><span class="w"> </span><span class="n">MEMBER</span><span class="w"> </span><span class="s1">&#39;/path/redo01a.log&#39;</span><span class="p">;</span>
+</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>
+</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="c1">-- Drop group (must be INACTIVE)</span>
+</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="n">LOGFILE</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a>
+</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="c1">-- Force switch and checkpoint</span>
+</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="n">SWITCH</span><span class="w"> </span><span class="n">LOGFILE</span><span class="p">;</span>
+</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="k">CHECKPOINT</span><span class="p">;</span>
 </span></code></pre></div>
-<div class="admonition danger">
-<p class="admonition-title">Never put control file copies on the same disk</p>
-<p>If both copies of a control file are on the same disk and that disk fails, you lose both — defeating the purpose of multiplexing.</p>
-</div>
 
 
 

@@ -1022,10 +1022,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#useful-queries-for-identifying-files-to-back-up" class="md-nav__link">
+  <a href="#monitor-a-running-backup" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Useful Queries for Identifying Files to Back Up
+        Monitor a Running Backup
       
     </span>
   </a>
@@ -1033,10 +1033,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#monitoring-backup-progress" class="md-nav__link">
+  <a href="#identify-files-before-backing-up" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Monitoring Backup Progress
+        Identify Files Before Backing Up
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#section-commands-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section Commands Summary
       
     </span>
   </a>
@@ -1358,10 +1369,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#useful-queries-for-identifying-files-to-back-up" class="md-nav__link">
+  <a href="#monitor-a-running-backup" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Useful Queries for Identifying Files to Back Up
+        Monitor a Running Backup
       
     </span>
   </a>
@@ -1369,10 +1380,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#monitoring-backup-progress" class="md-nav__link">
+  <a href="#identify-files-before-backing-up" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Monitoring Backup Progress
+        Identify Files Before Backing Up
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#section-commands-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section Commands Summary
       
     </span>
   </a>
@@ -1443,127 +1465,156 @@
 
 
 <h1 id="whole-partial-backup">Whole &amp; Partial Backup<a class="headerlink" href="#whole-partial-backup" title="Permanent link">&para;</a></h1>
+<hr />
 <h2 id="whole-database-backup">Whole Database Backup<a class="headerlink" href="#whole-database-backup" title="Permanent link">&para;</a></h2>
-<p>A whole backup includes all datafiles, the control file, and the SPFILE. It is the most common form of backup.</p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">-- Simplest whole backup (backup set, to FRA or configured channel)</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">-- Simplest full backup (to FRA or configured channel)</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">-- With archive logs included</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">-- Include archive logs (PLUS ARCHIVELOG also switches log before and after backup)</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1">-- Compressed (reduces backup size significantly — CPU cost)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1">-- Compressed — smaller files, uses more CPU</span>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">COMPRESSED</span><span class="w"> </span><span class="n">BACKUPSET</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">COMPRESSED</span><span class="w"> </span><span class="n">BACKUPSET</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1">-- With explicit format (overrides configured channel format)</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/u01/rman_bkp/db_%d_%T_%U&#39;</span><span class="p">;</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1">-- Full backup and then clean up obsolete backups in one job</span>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">RUN</span><span class="w"> </span><span class="err">{</span>
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">COMPRESSED</span><span class="w"> </span><span class="n">BACKUPSET</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">  </span><span class="k">DELETE</span><span class="w"> </span><span class="n">NOPROMPT</span><span class="w"> </span><span class="n">OBSOLETE</span><span class="p">;</span>
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="err">}</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1">-- Compressed + archive logs (most common production command)</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">COMPRESSED</span><span class="w"> </span><span class="n">BACKUPSET</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1">-- Custom output path (overrides configured channel format)</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/u01/rman_bkp/db_%d_%T_%U&#39;</span><span class="p">;</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1">-- Label this backup with a tag for easy reference later</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">TAG</span><span class="w"> </span><span class="s1">&#39;pre_upgrade_backup&#39;</span><span class="p">;</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1">-- Full job: backup then clean up old backups in one block</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">RUN</span><span class="w"> </span><span class="err">{</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">  </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">COMPRESSED</span><span class="w"> </span><span class="n">BACKUPSET</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">  </span><span class="k">DELETE</span><span class="w"> </span><span class="n">NOPROMPT</span><span class="w"> </span><span class="n">OBSOLETE</span><span class="p">;</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="err">}</span>
 </span></code></pre></div>
 <div class="admonition tip">
-<p class="admonition-title">PLUS ARCHIVELOG — what it actually does</p>
-<p>Running <code>BACKUP DATABASE PLUS ARCHIVELOG</code> executes these steps automatically:</p>
+<p class="admonition-title">What PLUS ARCHIVELOG actually does</p>
 <ol>
-<li><code>ALTER SYSTEM SWITCH LOGFILE</code> — archives the current online log</li>
-<li><code>BACKUP ARCHIVELOG ALL</code> — backs up all archive logs</li>
-<li>Backs up the database (datafiles)</li>
-<li><code>ALTER SYSTEM SWITCH LOGFILE</code> — archives again</li>
-<li>Backs up any new archive logs created during the DB backup</li>
+<li>Switch current redo log → archives it</li>
+<li>Back up all archive logs</li>
+<li>Back up the database</li>
+<li>Switch log again → archives logs created during backup</li>
+<li>Back up those new logs</li>
 </ol>
-<p>This ensures you have a complete, self-consistent backup including all redo needed for recovery.</p>
+<p>Result: a self-contained backup you can restore and recover completely.</p>
 </div>
 <hr />
 <h2 id="partial-backup-tablespace">Partial Backup — Tablespace<a class="headerlink" href="#partial-backup-tablespace" title="Permanent link">&para;</a></h2>
-<p>A partial backup covers only selected tablespaces. This is valid for both full and incremental strategies.</p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">-- Backup one tablespace</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">-- Back up one tablespace</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">-- Backup multiple tablespaces</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">-- Back up multiple tablespaces in one command</span>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="p">,</span><span class="w"> </span><span class="n">tools</span><span class="p">,</span><span class="w"> </span><span class="n">app_data</span><span class="p">;</span>
 </span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">-- Backup a tablespace with its archive logs</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">-- Tablespace backup + archive logs</span>
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
 </span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1">-- Incremental tablespace backup</span>
 </span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">INCREMENTAL</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
 </span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1">-- With format</span>
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span>
-</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">      </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/u01/rman_bkp/ts_users_%T_%U&#39;</span><span class="p">;</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1">-- Custom path</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/u01/rman_bkp/ts_users_%T_%U&#39;</span><span class="p">;</span>
 </span></code></pre></div>
-<div class="admonition info">
-<p class="admonition-title">Is a tablespace backup consistent?</p>
-<p>A tablespace backup taken while the database is <strong>open</strong> is <strong>inconsistent</strong> (hot backup). Recovery requires applying archive logs from the time of the backup. This is perfectly valid in ARCHIVELOG mode.</p>
-</div>
 <hr />
 <h2 id="partial-backup-datafile">Partial Backup — Datafile<a class="headerlink" href="#partial-backup-datafile" title="Permanent link">&para;</a></h2>
-<p>Back up individual datafiles by file number or path. Use <code>V$DATAFILE</code> or <code>DBA_DATA_FILES</code> to find file numbers.</p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">-- Check datafile numbers first</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1">-- SELECT FILE#, NAME FROM V$DATAFILE;</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1">-- or: SELECT FILE_ID, FILE_NAME FROM DBA_DATA_FILES;</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">-- Find datafile numbers first</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1">-- SELECT FILE_ID, FILE_NAME, TABLESPACE_NAME FROM DBA_DATA_FILES;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1">-- Or: SELECT FILE#, NAME FROM V$DATAFILE;</span>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1">-- Backup datafiles by number</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1">-- Back up specific datafiles by number</span>
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1">-- Backup a datafile by full path</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1">-- By full path</span>
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="s1">&#39;/u01/app/oradata/ORCL/users01.dbf&#39;</span><span class="p">;</span>
 </span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="c1">-- Multiple paths</span>
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">DATAFILE</span>
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">        </span><span class="s1">&#39;/u01/app/oradata/ORCL/users01.dbf&#39;</span><span class="p">,</span>
-</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">        </span><span class="s1">&#39;/u01/app/oradata/ORCL/system01.dbf&#39;</span><span class="p">;</span>
-</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="c1">-- Incremental datafile backup</span>
-</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">INCREMENTAL</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="c1">-- Incremental datafile backup</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">INCREMENTAL</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
 </span></code></pre></div>
 <hr />
 <h2 id="backup-spfile">Backup SPFILE<a class="headerlink" href="#backup-spfile" title="Permanent link">&para;</a></h2>
-<p>The SPFILE (Server Parameter File) is automatically backed up when <code>CONTROLFILE AUTOBACKUP</code> is ON. You can also back it up manually:</p>
 <div class="language-sql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">-- Manual SPFILE backup</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">SPFILE</span><span class="p">;</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1">-- Backup SPFILE to a specific location</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1">-- To specific location</span>
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">SPFILE</span><span class="w"> </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/u01/rman_bkp/spfile_%d_%T.bkp&#39;</span><span class="p">;</span>
 </span></code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">SPFILE is also backed up automatically</p>
+<p>When <code>CONFIGURE CONTROLFILE AUTOBACKUP ON</code>, the SPFILE is always included in the auto backup after every operation.</p>
+</div>
 <hr />
-<h2 id="useful-queries-for-identifying-files-to-back-up">Useful Queries for Identifying Files to Back Up<a class="headerlink" href="#useful-queries-for-identifying-files-to-back-up" title="Permanent link">&para;</a></h2>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">-- List all datafiles with their tablespace and size</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">FILE_ID</span><span class="p">,</span><span class="w"> </span><span class="n">FILE_NAME</span><span class="p">,</span><span class="w"> </span><span class="n">TABLESPACE_NAME</span><span class="p">,</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">       </span><span class="n">ROUND</span><span class="p">(</span><span class="n">BYTES</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">SIZE_MB</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">FROM</span><span class="w"> </span><span class="n">DBA_DATA_FILES</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">FILE_ID</span><span class="p">;</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1">-- Same from V$ (live status)</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">FILE</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">NAME</span><span class="p">,</span><span class="w"> </span><span class="n">STATUS</span><span class="p">,</span><span class="w"> </span><span class="n">ROUND</span><span class="p">(</span><span class="n">BYTES</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">SIZE_MB</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="k">FROM</span><span class="w"> </span><span class="n">V$DATAFILE</span><span class="p">;</span>
+<h2 id="monitor-a-running-backup">Monitor a Running Backup<a class="headerlink" href="#monitor-a-running-backup" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">-- From a separate SQL*Plus session while RMAN is running:</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1">-- Shows % complete for long-running operations</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">SID</span><span class="p">,</span><span class="w"> </span><span class="nb">SERIAL</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">CONTEXT</span><span class="p">,</span><span class="w"> </span><span class="n">SOFAR</span><span class="p">,</span><span class="w"> </span><span class="n">TOTALWORK</span><span class="p">,</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">       </span><span class="n">ROUND</span><span class="p">(</span><span class="n">SOFAR</span><span class="o">/</span><span class="n">TOTALWORK</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">PCT_DONE</span><span class="p">,</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">       </span><span class="n">MESSAGE</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="k">FROM</span><span class="w"> </span><span class="n">V$SESSION_LONGOPS</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">OPNAME</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;RMAN%&#39;</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">TOTALWORK</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">SOFAR</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">TOTALWORK</span><span class="p">;</span>
 </span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1">-- Check which tablespaces exist</span>
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">TABLESPACE_NAME</span><span class="p">,</span><span class="w"> </span><span class="n">STATUS</span><span class="p">,</span><span class="w"> </span><span class="n">CONTENTS</span>
-</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="k">FROM</span><span class="w"> </span><span class="n">DBA_TABLESPACES</span><span class="p">;</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1">-- View completed backup job history</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">SESSION_KEY</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT_TYPE</span><span class="p">,</span><span class="w"> </span><span class="n">STATUS</span><span class="p">,</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">       </span><span class="n">TO_CHAR</span><span class="p">(</span><span class="n">START_TIME</span><span class="p">,</span><span class="s1">&#39;DD-MON-YYYY HH24:MI&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">START_TIME</span><span class="p">,</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">       </span><span class="n">TO_CHAR</span><span class="p">(</span><span class="n">END_TIME</span><span class="p">,</span><span class="s1">&#39;DD-MON-YYYY HH24:MI&#39;</span><span class="p">)</span><span class="w">   </span><span class="k">AS</span><span class="w"> </span><span class="n">END_TIME</span><span class="p">,</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">       </span><span class="n">ELAPSED_SECONDS</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="k">FROM</span><span class="w"> </span><span class="n">V$RMAN_BACKUP_JOB_DETAILS</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">START_TIME</span><span class="w"> </span><span class="k">DESC</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="k">FETCH</span><span class="w"> </span><span class="k">FIRST</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="k">ROWS</span><span class="w"> </span><span class="k">ONLY</span><span class="p">;</span>
 </span></code></pre></div>
 <hr />
-<h2 id="monitoring-backup-progress">Monitoring Backup Progress<a class="headerlink" href="#monitoring-backup-progress" title="Permanent link">&para;</a></h2>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">-- Monitor a running RMAN backup (from another SQL*Plus session)</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">SID</span><span class="p">,</span><span class="w"> </span><span class="nb">SERIAL</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">CONTEXT</span><span class="p">,</span><span class="w"> </span><span class="n">SOFAR</span><span class="p">,</span><span class="w"> </span><span class="n">TOTALWORK</span><span class="p">,</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">       </span><span class="n">ROUND</span><span class="p">(</span><span class="n">SOFAR</span><span class="o">/</span><span class="n">TOTALWORK</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">PCT_DONE</span><span class="p">,</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">       </span><span class="n">MESSAGE</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="k">FROM</span><span class="w"> </span><span class="n">V$SESSION_LONGOPS</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">OPNAME</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;RMAN%&#39;</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">TOTALWORK</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">SOFAR</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">TOTALWORK</span><span class="p">;</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="c1">-- Check backup completion status</span>
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">SESSION_KEY</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT_TYPE</span><span class="p">,</span><span class="w"> </span><span class="n">STATUS</span><span class="p">,</span>
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">       </span><span class="n">TO_CHAR</span><span class="p">(</span><span class="n">START_TIME</span><span class="p">,</span><span class="s1">&#39;DD-MON-YYYY HH24:MI&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">START_TIME</span><span class="p">,</span>
-</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">       </span><span class="n">TO_CHAR</span><span class="p">(</span><span class="n">END_TIME</span><span class="p">,</span><span class="s1">&#39;DD-MON-YYYY HH24:MI&#39;</span><span class="p">)</span><span class="w">   </span><span class="k">AS</span><span class="w"> </span><span class="n">END_TIME</span><span class="p">,</span>
-</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">       </span><span class="n">ELAPSED_SECONDS</span>
-</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="k">FROM</span><span class="w"> </span><span class="n">V$RMAN_BACKUP_JOB_DETAILS</span>
-</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">START_TIME</span><span class="w"> </span><span class="k">DESC</span>
-</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="k">FETCH</span><span class="w"> </span><span class="k">FIRST</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="k">ROWS</span><span class="w"> </span><span class="k">ONLY</span><span class="p">;</span>
+<h2 id="identify-files-before-backing-up">Identify Files Before Backing Up<a class="headerlink" href="#identify-files-before-backing-up" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">-- List all datafiles with size and tablespace</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">FILE_ID</span><span class="p">,</span><span class="w"> </span><span class="n">FILE_NAME</span><span class="p">,</span><span class="w"> </span><span class="n">TABLESPACE_NAME</span><span class="p">,</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">       </span><span class="n">ROUND</span><span class="p">(</span><span class="n">BYTES</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">SIZE_MB</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="k">FROM</span><span class="w"> </span><span class="n">DBA_DATA_FILES</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">FILE_ID</span><span class="p">;</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1">-- Live view from V$</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">FILE</span><span class="o">#</span><span class="p">,</span><span class="w"> </span><span class="n">NAME</span><span class="p">,</span><span class="w"> </span><span class="n">STATUS</span><span class="p">,</span><span class="w"> </span><span class="n">ROUND</span><span class="p">(</span><span class="n">BYTES</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">SIZE_MB</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="k">FROM</span><span class="w"> </span><span class="n">V$DATAFILE</span><span class="p">;</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="c1">-- List all tablespaces</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">TABLESPACE_NAME</span><span class="p">,</span><span class="w"> </span><span class="n">STATUS</span><span class="p">,</span><span class="w"> </span><span class="n">CONTENTS</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="k">FROM</span><span class="w"> </span><span class="n">DBA_TABLESPACES</span><span class="p">;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="section-commands-summary">Section Commands Summary<a class="headerlink" href="#section-commands-summary" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">-- Whole database</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">COMPRESSED</span><span class="w"> </span><span class="n">BACKUPSET</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">COMPRESSED</span><span class="w"> </span><span class="n">BACKUPSET</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/path/%d_%T_%U&#39;</span><span class="p">;</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">TAG</span><span class="w"> </span><span class="s1">&#39;my_tag&#39;</span><span class="p">;</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="c1">-- Incremental whole</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">INCREMENTAL</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">INCREMENTAL</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">INCREMENTAL</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">CUMULATIVE</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="c1">-- Tablespace</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="p">,</span><span class="w"> </span><span class="n">tools</span><span class="p">,</span><span class="w"> </span><span class="n">app_data</span><span class="p">;</span>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="n">PLUS</span><span class="w"> </span><span class="n">ARCHIVELOG</span><span class="p">;</span>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">INCREMENTAL</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="c1">-- Datafile</span>
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="s1">&#39;/u01/oradata/ORCL/users01.dbf&#39;</span><span class="p">;</span>
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">INCREMENTAL</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>
+</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a><span class="c1">-- SPFILE</span>
+</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">SPFILE</span><span class="p">;</span>
+</span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a>
+</span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="c1">-- Monitor</span>
+</span><span id="__span-6-29"><a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">ROUND</span><span class="p">(</span><span class="n">SOFAR</span><span class="o">/</span><span class="n">TOTALWORK</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="n">PCT_DONE</span><span class="p">,</span><span class="w"> </span><span class="n">MESSAGE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">V$SESSION_LONGOPS</span>
+</span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">OPNAME</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;RMAN%&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">SOFAR</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">TOTALWORK</span><span class="p">;</span>
 </span></code></pre></div>
 
 

@@ -520,17 +520,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-backups-exist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why Backups Exist
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#categories-of-failure" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -542,10 +531,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-dbas-responsibility" class="md-nav__link">
+  <a href="#oracle-solutions-by-recovery-speed" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The DBA's Responsibility
+        Oracle Solutions by Recovery Speed
       
     </span>
   </a>
@@ -553,10 +542,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#oracle-protection-solutions-by-rto" class="md-nav__link">
+  <a href="#section-commands" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Oracle Protection Solutions by RTO
+        Section Commands
       
     </span>
   </a>
@@ -1292,17 +1281,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-backups-exist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why Backups Exist
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#categories-of-failure" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1314,10 +1292,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-dbas-responsibility" class="md-nav__link">
+  <a href="#oracle-solutions-by-recovery-speed" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The DBA's Responsibility
+        Oracle Solutions by Recovery Speed
       
     </span>
   </a>
@@ -1325,10 +1303,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#oracle-protection-solutions-by-rto" class="md-nav__link">
+  <a href="#section-commands" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Oracle Protection Solutions by RTO
+        Section Commands
       
     </span>
   </a>
@@ -1378,155 +1356,97 @@
 
 
 <h1 id="why-backup-failure-types">Why Backup &amp; Failure Types<a class="headerlink" href="#why-backup-failure-types" title="Permanent link">&para;</a></h1>
-<h2 id="why-backups-exist">Why Backups Exist<a class="headerlink" href="#why-backups-exist" title="Permanent link">&para;</a></h2>
-<p>Data is the most valuable asset in any organization. Hardware fails, humans make mistakes, and disasters happen. A DBA's core responsibility is not just keeping the database running — it's ensuring data can be <strong>recovered</strong> when the inevitable happens.</p>
-<blockquote>
-<p><strong>The question is never "will we lose data?" — it's "how much data can we afford to lose, and how fast must we recover?"</strong></p>
-</blockquote>
+<p>RMAN (Recovery Manager) is Oracle's built-in tool for backup and recovery. Unlike a simple <code>cp</code> command, RMAN understands Oracle's internal structure — it knows which blocks are used, which are corrupted, and exactly what's needed to recover.</p>
 <hr />
 <h2 id="categories-of-failure">Categories of Failure<a class="headerlink" href="#categories-of-failure" title="Permanent link">&para;</a></h2>
-<p>Oracle classifies failures into six major categories. Understanding each helps you choose the right protection strategy.</p>
 <table>
 <thead>
 <tr>
 <th>Failure Type</th>
-<th>What Happens</th>
 <th>Example</th>
-<th>Fix</th>
+<th>How It's Fixed</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>User Process</strong></td>
-<td>A client application or session crashes</td>
-<td><code>CTRL+C</code> on a running query, app crash</td>
+<td>App crash, <code>CTRL+C</code> on a query</td>
 <td>Automatic — Oracle rolls back uncommitted work</td>
 </tr>
 <tr>
 <td><strong>Instance</strong></td>
-<td>The Oracle instance itself dies unexpectedly</td>
 <td>Server power cut, OS crash</td>
 <td>Automatic instance recovery on next <code>STARTUP</code></td>
 </tr>
 <tr>
 <td><strong>Media / Storage</strong></td>
-<td>A disk, datafile, or storage device fails</td>
 <td>Bad sector corrupts a <code>.dbf</code> file</td>
 <td>Restore from backup + apply archive logs</td>
 </tr>
 <tr>
 <td><strong>Inaccessible Component</strong></td>
-<td>A required file can't be opened</td>
-<td>Wrong permissions on a datafile</td>
+<td>Wrong file permissions</td>
 <td>Fix OS permissions or restore file</td>
 </tr>
 <tr>
 <td><strong>Physical Corruption</strong></td>
-<td>Block header is damaged but file is accessible</td>
-<td>Disk write error mid-block</td>
-<td>RMAN block media recovery, restore datafile</td>
+<td>Disk write error damages a block</td>
+<td>RMAN block media recovery</td>
 </tr>
 <tr>
-<td><strong>Logical Corruption (Inconsistency)</strong></td>
-<td>SCN mismatch — data is structurally valid but logically wrong</td>
+<td><strong>Logical Corruption</strong></td>
 <td>Accidental <code>DELETE</code> or <code>DROP TABLE</code></td>
-<td>Flashback, point-in-time recovery</td>
+<td>Flashback or point-in-time recovery</td>
 </tr>
 <tr>
 <td><strong>Disaster</strong></td>
-<td>Entire site is lost</td>
 <td>Fire, flood, data center outage</td>
-<td>Disaster Recovery (Oracle Data Guard, OSB)</td>
+<td>Offsite backup / Oracle Data Guard</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="the-dbas-responsibility">The DBA's Responsibility<a class="headerlink" href="#the-dbas-responsibility" title="Permanent link">&para;</a></h2>
-<p>A backup strategy must answer four questions before any incident occurs:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>1. What do we back up?       → entire DB, specific tablespaces, archivelogs?
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>2. How often?                → daily full, hourly incremental?
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>3. Where do we store it?     → local disk, tape, remote site?
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>4. How fast must we recover? → seconds (RAC/DataGuard) or hours (RMAN restore)?
-</span></code></pre></div>
+<h2 id="oracle-solutions-by-recovery-speed">Oracle Solutions by Recovery Speed<a class="headerlink" href="#oracle-solutions-by-recovery-speed" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Speed</th>
+<th>Solution</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Seconds</td>
+<td>Oracle RAC / Data Guard</td>
+<td>Infrastructure failure</td>
+</tr>
+<tr>
+<td>Minutes</td>
+<td>Data Guard switchover / Flashback</td>
+<td>Human error</td>
+</tr>
+<tr>
+<td>Hours</td>
+<td>RMAN restore</td>
+<td>Media failure</td>
+</tr>
+<tr>
+<td>Days</td>
+<td>Offsite tape restore</td>
+<td>Disaster</td>
+</tr>
+</tbody>
+</table>
 <div class="admonition warning">
 <p class="admonition-title">A backup you can't restore is not a backup</p>
-<p>Always test your recovery process in a separate environment. Many organizations discover their backups are broken only during an actual disaster.</p>
+<p>Always test your recovery process before you need it.</p>
 </div>
 <hr />
-<h2 id="oracle-protection-solutions-by-rto">Oracle Protection Solutions by RTO<a class="headerlink" href="#oracle-protection-solutions-by-rto" title="Permanent link">&para;</a></h2>
-<p>Oracle offers different solutions depending on how quickly you need to recover:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Seconds / Minutes (Infrastructure Failure)</label><label for="__tabbed_1_2">Minutes / Hours (Human Error)</label><label for="__tabbed_1_3">Hours / Days (Catastrophic)</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<table>
-<thead>
-<tr>
-<th>Solution</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Oracle RAC</strong></td>
-<td>Multiple instances on the same database — instance fails, others keep serving</td>
-</tr>
-<tr>
-<td><strong>Oracle Data Guard</strong></td>
-<td>Standby database on separate hardware — switchover in seconds</td>
-</tr>
-<tr>
-<td><strong>Oracle GoldenGate</strong></td>
-<td>Real-time data replication across databases</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="tabbed-block">
-<table>
-<thead>
-<tr>
-<th>Solution</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Oracle Flashback</strong></td>
-<td>Roll back a table or entire DB to a past point without restore</td>
-</tr>
-<tr>
-<td><strong>Oracle RMAN</strong></td>
-<td>Restore specific datafiles, tablespaces, or whole DB</td>
-</tr>
-<tr>
-<td><strong>Data Guard</strong></td>
-<td>Activate a standby to replace the primary</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="tabbed-block">
-<table>
-<thead>
-<tr>
-<th>Solution</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Oracle RMAN + OSB</strong></td>
-<td>Full restore from backup — local tape or Oracle Secure Backup cloud</td>
-</tr>
-<tr>
-<td><strong>Offsite backups</strong></td>
-<td>Backups shipped to a geographically separate location</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
+<h2 id="section-commands">Section Commands<a class="headerlink" href="#section-commands" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">-- Not applicable here — this is a concepts page.</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">-- See the next pages for actual RMAN commands.</span>
+</span></code></pre></div>
 
 
 

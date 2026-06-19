@@ -684,34 +684,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="5 · Channels">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#auto-channel-persistent" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Auto Channel (Persistent)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#manual-channel-per-job" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Manual Channel (Per-Job)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -726,10 +698,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-backup-set-size-maxsetsize" class="md-nav__link">
+  <a href="#7-max-backup-set-size-maxsetsize" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7 · Backup Set Size (MAXSETSIZE)
+        7 · Max Backup Set Size (MAXSETSIZE)
       
     </span>
   </a>
@@ -737,10 +709,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#8-encrypted-backups" class="md-nav__link">
+  <a href="#8-encryption" class="md-nav__link">
     <span class="md-ellipsis">
       
-        8 · Encrypted Backups
+        8 · Encryption
       
     </span>
   </a>
@@ -748,10 +720,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#format-string-substitution-variables" class="md-nav__link">
+  <a href="#format-string-variables" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Format String Substitution Variables
+        Format String Variables
       
     </span>
   </a>
@@ -759,10 +731,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#full-configuration-reset" class="md-nav__link">
+  <a href="#section-commands-summary" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Full Configuration Reset
+        Section Commands Summary
       
     </span>
   </a>
@@ -1438,34 +1410,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="5 · Channels">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#auto-channel-persistent" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Auto Channel (Persistent)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#manual-channel-per-job" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Manual Channel (Per-Job)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1480,10 +1424,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-backup-set-size-maxsetsize" class="md-nav__link">
+  <a href="#7-max-backup-set-size-maxsetsize" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7 · Backup Set Size (MAXSETSIZE)
+        7 · Max Backup Set Size (MAXSETSIZE)
       
     </span>
   </a>
@@ -1491,10 +1435,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#8-encrypted-backups" class="md-nav__link">
+  <a href="#8-encryption" class="md-nav__link">
     <span class="md-ellipsis">
       
-        8 · Encrypted Backups
+        8 · Encryption
       
     </span>
   </a>
@@ -1502,10 +1446,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#format-string-substitution-variables" class="md-nav__link">
+  <a href="#format-string-variables" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Format String Substitution Variables
+        Format String Variables
       
     </span>
   </a>
@@ -1513,10 +1457,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#full-configuration-reset" class="md-nav__link">
+  <a href="#section-commands-summary" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Full Configuration Reset
+        Section Commands Summary
       
     </span>
   </a>
@@ -1566,217 +1510,160 @@
 
 
 <h1 id="rman-configuration">RMAN Configuration<a class="headerlink" href="#rman-configuration" title="Permanent link">&para;</a></h1>
-<p>RMAN has persistent configuration parameters stored in the control file (or catalog). They survive restarts and apply to every backup unless overridden in a <code>RUN</code> block.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># View all current settings</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>RMAN&gt;<span class="w"> </span>SHOW<span class="w"> </span>ALL<span class="p">;</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># View a specific setting</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>RMAN&gt;<span class="w"> </span>SHOW<span class="w"> </span>RETENTION<span class="w"> </span>POLICY<span class="p">;</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>RMAN&gt;<span class="w"> </span>SHOW<span class="w"> </span>DEFAULT<span class="w"> </span>DEVICE<span class="w"> </span>TYPE<span class="p">;</span>
+<p>RMAN configuration parameters are <strong>persistent</strong> — stored in the control file or catalog, survive restarts, and apply to every backup unless overridden inside a <code>RUN {}</code> block.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SHOW</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span><span class="w">               </span><span class="c1">-- view all current settings</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SHOW</span><span class="w"> </span><span class="n">RETENTION</span><span class="w"> </span><span class="n">POLICY</span><span class="p">;</span><span class="w">  </span><span class="c1">-- view one specific setting</span>
 </span></code></pre></div>
 <hr />
 <h2 id="1-retention-policy">1 · Retention Policy<a class="headerlink" href="#1-retention-policy" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p><strong>"How long is a backup considered valid before RMAN marks it obsolete?"</strong></p>
-</blockquote>
-<p>This is the most critical configuration. It drives what <code>DELETE OBSOLETE</code> removes.</p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">-- Option A: Recovery Window — backup is valid if it can recover the DB</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1">-- to any point within the last N days</span>
+<p>Controls when a backup is considered <strong>obsolete</strong> (safe to delete).</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">-- Keep backups that cover the last 7 days of recovery</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1">-- Oracle keeps as many backups as needed to satisfy the window</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">RETENTION</span><span class="w"> </span><span class="n">POLICY</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">RECOVERY</span><span class="w"> </span><span class="n">WINDOW</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="n">DAYS</span><span class="p">;</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">-- Option B: Redundancy — keep the last N full backups of each datafile</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1">-- Default is REDUNDANCY 1</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">RETENTION</span><span class="w"> </span><span class="n">POLICY</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">REDUNDANCY</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1">-- Option C: No retention — all backups are always valid (never obsolete)</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">RETENTION</span><span class="w"> </span><span class="n">POLICY</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">NONE</span><span class="p">;</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c1">-- Reset back to default (REDUNDANCY 1)</span>
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">RETENTION</span><span class="w"> </span><span class="n">POLICY</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">-- Keep only the last 3 most recent backups of each datafile</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">RETENTION</span><span class="w"> </span><span class="n">POLICY</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">REDUNDANCY</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1">-- No obsolete backups — everything is always valid</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">RETENTION</span><span class="w"> </span><span class="n">POLICY</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">NONE</span><span class="p">;</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1">-- Reset to default (REDUNDANCY 1)</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">RETENTION</span><span class="w"> </span><span class="n">POLICY</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span>
 </span></code></pre></div>
-<p><strong>Check and clean obsolete backups:</strong>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">-- List backups that are now obsolete</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">-- See which backups are now obsolete</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">REPORT</span><span class="w"> </span><span class="n">OBSOLETE</span><span class="p">;</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1">-- Delete obsolete backups (prompts for confirmation)</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1">-- Delete obsolete backups (asks for confirmation)</span>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">OBSOLETE</span><span class="p">;</span>
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1">-- Delete without confirmation prompt (for scripts)</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1">-- Delete without confirmation prompt (use in scripts)</span>
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">NOPROMPT</span><span class="w"> </span><span class="n">OBSOLETE</span><span class="p">;</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <div class="admonition info">
 <p class="admonition-title">RECOVERY WINDOW vs REDUNDANCY</p>
-<ul>
-<li><code>RECOVERY WINDOW OF 7 DAYS</code> — guarantees you can restore to any point in the past 7 days. Oracle keeps as many backups as needed to satisfy that window.</li>
-<li><code>REDUNDANCY 3</code> — always keeps the 3 most recent full backups. Simpler, but doesn't guarantee a specific point-in-time window.</li>
-</ul>
+<p><code>RECOVERY WINDOW OF 7 DAYS</code> guarantees you can restore to any point in the past 7 days.
+<code>REDUNDANCY 3</code> keeps the last 3 backups — simpler, but no point-in-time guarantee.</p>
 </div>
 <hr />
 <h2 id="2-backup-optimization">2 · Backup Optimization<a class="headerlink" href="#2-backup-optimization" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p><strong>"Skip backing up files that haven't changed since the last backup."</strong></p>
-</blockquote>
-<p>Most useful for <strong>read-only tablespaces</strong> that are backed up once and never need to be backed up again.</p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">-- Enable optimization (skips unchanged read-only datafiles)</span>
+<p>Skips files that haven't changed since the last backup — mainly useful for read-only tablespaces.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">-- Skip unchanged read-only datafiles in future backups</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">OPTIMIZATION</span><span class="w"> </span><span class="k">ON</span><span class="p">;</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1">-- Disable (default — back up everything every time)</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1">-- Back up everything every time (default)</span>
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">OPTIMIZATION</span><span class="w"> </span><span class="k">OFF</span><span class="p">;</span>
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">OPTIMIZATION</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span><span class="w">  </span><span class="c1">-- reset to default</span>
 </span></code></pre></div>
-<p><strong>Use case:</strong> You have a large 200 GB historical data tablespace set to READ ONLY. With optimization ON, RMAN skips it after the first backup, saving hours every night.</p>
 <hr />
 <h2 id="3-default-device-type">3 · Default Device Type<a class="headerlink" href="#3-default-device-type" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p><strong>"Where does RMAN write backups by default?"</strong></p>
-</blockquote>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">-- Disk (default) — write to filesystem or ASM</span>
+<p>Where backups are written by default.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">-- Write to disk/filesystem (default)</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">DISK</span><span class="p">;</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1">-- SBT (System Backup to Tape) — write to tape library via media manager</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1">-- Write to tape via media manager</span>
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">SBT</span><span class="p">;</span>
 </span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
 </span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span>
 </span></code></pre></div>
-<table>
-<thead>
-<tr>
-<th>Device</th>
-<th>Use When</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>DISK</code></td>
-<td>Local filesystem, NFS mount, ASM — fast, easy</td>
-</tr>
-<tr>
-<td><code>SBT</code></td>
-<td>Tape libraries, Oracle Secure Backup (OSB), cloud via media agent</td>
-</tr>
-</tbody>
-</table>
 <hr />
 <h2 id="4-control-file-auto-backup">4 · Control File Auto Backup<a class="headerlink" href="#4-control-file-auto-backup" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p><strong>"Automatically back up the control file and SPFILE after every backup or structural change."</strong></p>
-</blockquote>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">-- Enable (recommended for production)</span>
+<p>Automatically backs up the control file and SPFILE after every backup operation.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">-- Enable auto backup (recommended for production)</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="w"> </span><span class="n">AUTOBACKUP</span><span class="w"> </span><span class="k">ON</span><span class="p">;</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1">-- Disable</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1">-- Disable auto backup</span>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="w"> </span><span class="n">AUTOBACKUP</span><span class="w"> </span><span class="k">OFF</span><span class="p">;</span>
 </span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1">-- Set a specific location for the auto backup</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="w"> </span><span class="n">AUTOBACKUP</span><span class="w"> </span><span class="n">FORMAT</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">      </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;/u01/rman_bkp/cf_%F&#39;</span><span class="p">;</span>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">      </span><span class="c1">-- %F = unique identifier (DB ID + timestamp)</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1">-- Set where auto backup files are written (%F = unique CF filename)</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="w"> </span><span class="n">AUTOBACKUP</span><span class="w"> </span><span class="n">FORMAT</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">      </span><span class="k">FOR</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">      </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;/u01/rman_bkp/cf_%F&#39;</span><span class="p">;</span>
 </span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="w"> </span><span class="n">AUTOBACKUP</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="c1">-- Reset location to default (FRA or configured channel)</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="w"> </span><span class="n">AUTOBACKUP</span><span class="w"> </span><span class="n">FORMAT</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">      </span><span class="k">FOR</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span>
 </span></code></pre></div>
 <div class="admonition warning">
-<p class="admonition-title">Special rule for SYSTEM tablespace</p>
-<p>Even if <code>CONTROLFILE AUTOBACKUP</code> is <strong>OFF</strong>, backing up <strong>datafile 1</strong> (the SYSTEM tablespace) will always trigger an automatic control file backup. This is hardcoded Oracle behavior.</p>
+<p class="admonition-title">Special rule — datafile 1 always triggers CF auto backup</p>
+<p>Backing up datafile 1 (SYSTEM tablespace) always creates a control file backup automatically, even if AUTOBACKUP is OFF.</p>
 </div>
 <hr />
 <h2 id="5-channels">5 · Channels<a class="headerlink" href="#5-channels" title="Permanent link">&para;</a></h2>
-<p>A channel is the I/O worker process. Configuring channels controls <strong>where</strong> backups are written and with what format.</p>
-<h3 id="auto-channel-persistent">Auto Channel (Persistent)<a class="headerlink" href="#auto-channel-persistent" title="Permanent link">&para;</a></h3>
-<p>Applies to every backup automatically:</p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">-- Set format for all disk backups</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CHANNEL</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">      </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/u01/rman_bkp/%d_%T_%U&#39;</span><span class="p">;</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">      </span><span class="c1">-- %d = DB name, %T = YYYYMMDD, %U = unique ID</span>
+<p>A channel is the I/O worker process. Configure auto channels to set the backup path for all jobs.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">-- Set default path/format for all disk channel backups</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1">-- %d=DB name, %T=YYYYMMDD, %U=unique ID</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CHANNEL</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">      </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/u01/rman_bkp/%d_%T_%U&#39;</span><span class="p">;</span>
 </span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="c1">-- Multiple auto channels (parallelism)</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CHANNEL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">      </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/disk1/rman/%U&#39;</span><span class="p">;</span>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CHANNEL</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span>
-</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">      </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/disk2/rman/%U&#39;</span><span class="p">;</span>
-</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
-</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CHANNEL</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="c1">-- Two auto channels writing to different disks (parallelism)</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CHANNEL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/disk1/rman/%U&#39;</span><span class="p">;</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CHANNEL</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/disk2/rman/%U&#39;</span><span class="p">;</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1">-- Reset channel config to default</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CHANNEL</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span>
 </span></code></pre></div>
-<h3 id="manual-channel-per-job">Manual Channel (Per-Job)<a class="headerlink" href="#manual-channel-per-job" title="Permanent link">&para;</a></h3>
-<p>Override channels for a specific backup inside a <code>RUN</code> block:</p>
+<p>Manual channel (overrides auto channel for one job only):</p>
 <div class="language-sql highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">RUN</span><span class="w"> </span><span class="err">{</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="n">CHANNEL</span><span class="w"> </span><span class="n">ch1</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/u01/rman_bkp/%U&#39;</span><span class="p">;</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="c1">-- Allocate a channel for this job only</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="n">CHANNEL</span><span class="w"> </span><span class="n">ch1</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/u01/rman_bkp/%U&#39;</span><span class="p">;</span>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="n">RELEASE</span><span class="w"> </span><span class="n">CHANNEL</span><span class="w"> </span><span class="n">ch1</span><span class="p">;</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="n">RELEASE</span><span class="w"> </span><span class="n">CHANNEL</span><span class="w"> </span><span class="n">ch1</span><span class="p">;</span><span class="w">  </span><span class="c1">-- free the channel when done</span>
 </span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="err">}</span>
 </span></code></pre></div>
-<div class="admonition info">
-<p class="admonition-title">Manual channels override auto channels</p>
-<p>When you manually allocate a channel inside <code>RUN {}</code>, RMAN ignores the configured auto channels for that job.</p>
-</div>
 <hr />
 <h2 id="6-parallelism">6 · Parallelism<a class="headerlink" href="#6-parallelism" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p><strong>"How many channels (I/O streams) run simultaneously?"</strong></p>
-</blockquote>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">-- Set degree of parallelism (= number of concurrent channels)</span>
+<p>How many channels run at the same time — controls backup speed.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">-- Run 2 I/O streams in parallel (good for 2 physical disks)</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="n">PARALLELISM</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">SBT</span><span class="w">  </span><span class="n">PARALLELISM</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="n">PARALLELISM</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span><span class="w">  </span><span class="c1">-- reset to 1</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1">-- Reset to 1 (no parallelism, default)</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="n">PARALLELISM</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span>
 </span></code></pre></div>
-<p><strong>Rules:</strong>
-- Parallelism degree should equal the number of <strong>physical disks</strong> in your storage
-- <strong>Do not</strong> set parallelism &gt; 1 on a single-disk system — it causes contention and slows backups down
-- Each degree of parallelism = one channel = one server process on the DB</p>
+<div class="admonition tip">
+<p class="admonition-title">One channel per physical disk</p>
+<p>Setting parallelism higher than your number of physical disks causes I/O contention and slows the backup down.</p>
+</div>
 <hr />
-<h2 id="7-backup-set-size-maxsetsize">7 · Backup Set Size (MAXSETSIZE)<a class="headerlink" href="#7-backup-set-size-maxsetsize" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p><strong>"Limit how large a single backup set can grow."</strong></p>
-</blockquote>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">-- Limit backup set to 4 GB</span>
+<h2 id="7-max-backup-set-size-maxsetsize">7 · Max Backup Set Size (MAXSETSIZE)<a class="headerlink" href="#7-max-backup-set-size-maxsetsize" title="Permanent link">&para;</a></h2>
+<p>Limits how large a single backup set file can grow.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">-- Limit each backup piece to 4 GB (useful for tape media)</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">MAXSETSIZE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="mi">4</span><span class="k">G</span><span class="p">;</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1">-- In megabytes</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">MAXSETSIZE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="mi">2048</span><span class="n">M</span><span class="p">;</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="c1">-- Reset to unlimited (default)</span>
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">MAXSETSIZE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">UNLIMITED</span><span class="p">;</span>
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">MAXSETSIZE</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">MAXSETSIZE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="mi">2048</span><span class="n">M</span><span class="p">;</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1">-- Unlimited (default)</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">MAXSETSIZE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">UNLIMITED</span><span class="p">;</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">MAXSETSIZE</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span>
 </span></code></pre></div>
-<p><strong>Critical rules:</strong>
-- A single datafile <strong>cannot be split</strong> across backup sets — it must fit entirely in one backup piece
-- <code>MAXSETSIZE</code> must be <strong>≥ the size of the largest datafile</strong> you're backing up
-- If MAXSETSIZE is too small for the largest datafile, RMAN will error</p>
-<p><strong>Use case:</strong> Tape media has a fixed capacity. Set MAXSETSIZE to match the tape size so each tape holds exactly one backup set.</p>
+<div class="admonition warning">
+<p class="admonition-title">Must be &gt;= your largest single datafile</p>
+<p>A single datafile cannot be split across backup pieces. If MAXSETSIZE is smaller than your biggest datafile, RMAN will error.</p>
+</div>
 <hr />
-<h2 id="8-encrypted-backups">8 · Encrypted Backups<a class="headerlink" href="#8-encrypted-backups" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p><strong>"Encrypt backup data so it's unreadable without the key — important for offsite/cloud backups."</strong></p>
-</blockquote>
+<h2 id="8-encryption">8 · Encryption<a class="headerlink" href="#8-encryption" title="Permanent link">&para;</a></h2>
+<p>Encrypts backup data — important for backups stored offsite or in the cloud.</p>
 <div class="language-sql highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">-- Enable encryption for all backups</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">ENCRYPTION</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">ON</span><span class="p">;</span>
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
 </span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1">-- Disable encryption</span>
 </span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">ENCRYPTION</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">OFF</span><span class="p">;</span>
 </span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1">-- Encrypt only a specific tablespace</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1">-- Encrypt one tablespace only</span>
 </span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">ENCRYPTION</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">ON</span><span class="p">;</span>
 </span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
-</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="c1">-- Set encryption algorithm (default AES128)</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="c1">-- Set encryption algorithm (AES256 = strongest, AES128 = default)</span>
 </span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">ENCRYPTION</span><span class="w"> </span><span class="n">ALGORITHM</span><span class="w"> </span><span class="s1">&#39;AES256&#39;</span><span class="p">;</span>
 </span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
 </span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">ENCRYPTION</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span>
 </span></code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">Set a wallet/passphrase before encrypting</p>
-<p>RMAN encryption requires an Oracle wallet or a passphrase. Without it, backups fail silently or cannot be restored.
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1">-- Transparent mode (uses wallet — must be open at restore time too)</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">ENCRYPTION</span><span class="w"> </span><span class="k">ON</span><span class="p">;</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1">-- Password mode (uses a passphrase — specify at restore time)</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">ENCRYPTION</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">&#39;MyBackupPass&#39;</span><span class="p">;</span>
-</span></code></pre></div></p>
-</div>
+<p>Password-based encryption (set before running the backup):</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1">-- Use a passphrase — must supply same passphrase at restore time</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">ENCRYPTION</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">&#39;MyBackupPass&#39;</span><span class="p">;</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">;</span>
+</span></code></pre></div>
 <hr />
-<h2 id="format-string-substitution-variables">Format String Substitution Variables<a class="headerlink" href="#format-string-substitution-variables" title="Permanent link">&para;</a></h2>
-<p>Used in <code>FORMAT</code>, <code>CONFIGURE CHANNEL</code>, and <code>CONFIGURE CONTROLFILE AUTOBACKUP FORMAT</code>:</p>
+<h2 id="format-string-variables">Format String Variables<a class="headerlink" href="#format-string-variables" title="Permanent link">&para;</a></h2>
+<p>Used in FORMAT, CONFIGURE CHANNEL, and CONTROLFILE AUTOBACKUP FORMAT:</p>
 <table>
 <thead>
 <tr>
@@ -1792,23 +1679,8 @@
 <td><code>ORCL</code></td>
 </tr>
 <tr>
-<td><code>%D</code></td>
-<td>Day of month (DD)</td>
-<td><code>18</code></td>
-</tr>
-<tr>
-<td><code>%M</code></td>
-<td>Month (MM)</td>
-<td><code>06</code></td>
-</tr>
-<tr>
-<td><code>%Y</code></td>
-<td>Year (YYYY)</td>
-<td><code>2026</code></td>
-</tr>
-<tr>
 <td><code>%T</code></td>
-<td>Full date (YYYYMMDD)</td>
+<td>Full date YYYYMMDD</td>
 <td><code>20260618</code></td>
 </tr>
 <tr>
@@ -1817,41 +1689,74 @@
 <td><code>42</code></td>
 </tr>
 <tr>
-<td><code>%t</code></td>
-<td>Backup set timestamp (seconds since epoch)</td>
-<td><code>1718640000</code></td>
-</tr>
-<tr>
 <td><code>%p</code></td>
-<td>Backup piece number within set</td>
+<td>Piece number within set</td>
 <td><code>1</code></td>
 </tr>
 <tr>
 <td><code>%U</code></td>
-<td>Unique ID — <code>%u_%p_%c</code> combined</td>
+<td>Unique ID (auto-generated)</td>
 <td><code>3df5k2a1_1_1</code></td>
 </tr>
 <tr>
 <td><code>%F</code></td>
-<td>Unique name for control file auto backup</td>
+<td>Unique control file auto backup name</td>
 <td><code>c-1234567890-20260618-00</code></td>
 </tr>
 <tr>
 <td><code>%e</code></td>
-<td>Archived log sequence number</td>
+<td>Archive log sequence number</td>
 <td><code>157</code></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Recommended format string:</strong>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CHANNEL</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">      </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/u01/rman/%d_%T_%s_%p_%U&#39;</span><span class="p">;</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c1">-- produces: ORCL_20260618_42_1_3df5k2a1_1_1</span>
-</span></code></pre></div></p>
 <hr />
-<h2 id="full-configuration-reset">Full Configuration Reset<a class="headerlink" href="#full-configuration-reset" title="Permanent link">&para;</a></h2>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1">-- Reset ALL RMAN configuration to factory defaults</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span>
+<h2 id="section-commands-summary">Section Commands Summary<a class="headerlink" href="#section-commands-summary" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SHOW</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span><span class="w">                                              </span><span class="c1">-- view all settings</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SHOW</span><span class="w"> </span><span class="n">RETENTION</span><span class="w"> </span><span class="n">POLICY</span><span class="p">;</span><span class="w">                                 </span><span class="c1">-- view one setting</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1">-- Retention</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">RETENTION</span><span class="w"> </span><span class="n">POLICY</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">RECOVERY</span><span class="w"> </span><span class="n">WINDOW</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="n">DAYS</span><span class="p">;</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">RETENTION</span><span class="w"> </span><span class="n">POLICY</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">REDUNDANCY</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">RETENTION</span><span class="w"> </span><span class="n">POLICY</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="c1">-- Optimization</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">OPTIMIZATION</span><span class="w"> </span><span class="k">ON</span><span class="p">;</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">BACKUP</span><span class="w"> </span><span class="n">OPTIMIZATION</span><span class="w"> </span><span class="k">OFF</span><span class="p">;</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="c1">-- Device</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">DISK</span><span class="p">;</span>
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">SBT</span><span class="p">;</span>
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="c1">-- Control file auto backup</span>
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="w"> </span><span class="n">AUTOBACKUP</span><span class="w"> </span><span class="k">ON</span><span class="p">;</span>
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="w"> </span><span class="n">AUTOBACKUP</span><span class="w"> </span><span class="k">OFF</span><span class="p">;</span>
+</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CONTROLFILE</span><span class="w"> </span><span class="n">AUTOBACKUP</span><span class="w"> </span><span class="n">FORMAT</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;/path/cf_%F&#39;</span><span class="p">;</span>
+</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>
+</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="c1">-- Channels</span>
+</span><span id="__span-12-23"><a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CHANNEL</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/path/%d_%T_%U&#39;</span><span class="p">;</span>
+</span><span id="__span-12-24"><a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CHANNEL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="n">FORMAT</span><span class="w"> </span><span class="s1">&#39;/disk1/rman/%U&#39;</span><span class="p">;</span>
+</span><span id="__span-12-25"><a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">CHANNEL</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span>
+</span><span id="__span-12-26"><a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a>
+</span><span id="__span-12-27"><a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a><span class="c1">-- Parallelism</span>
+</span><span id="__span-12-28"><a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="n">PARALLELISM</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</span><span id="__span-12-29"><a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">DISK</span><span class="w"> </span><span class="n">PARALLELISM</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span>
+</span><span id="__span-12-30"><a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a>
+</span><span id="__span-12-31"><a id="__codelineno-12-31" name="__codelineno-12-31" href="#__codelineno-12-31"></a><span class="c1">-- Max set size</span>
+</span><span id="__span-12-32"><a id="__codelineno-12-32" name="__codelineno-12-32" href="#__codelineno-12-32"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">MAXSETSIZE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="mi">4</span><span class="k">G</span><span class="p">;</span>
+</span><span id="__span-12-33"><a id="__codelineno-12-33" name="__codelineno-12-33" href="#__codelineno-12-33"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">MAXSETSIZE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">UNLIMITED</span><span class="p">;</span>
+</span><span id="__span-12-34"><a id="__codelineno-12-34" name="__codelineno-12-34" href="#__codelineno-12-34"></a>
+</span><span id="__span-12-35"><a id="__codelineno-12-35" name="__codelineno-12-35" href="#__codelineno-12-35"></a><span class="c1">-- Encryption</span>
+</span><span id="__span-12-36"><a id="__codelineno-12-36" name="__codelineno-12-36" href="#__codelineno-12-36"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">ENCRYPTION</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">ON</span><span class="p">;</span>
+</span><span id="__span-12-37"><a id="__codelineno-12-37" name="__codelineno-12-37" href="#__codelineno-12-37"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">ENCRYPTION</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="k">OFF</span><span class="p">;</span>
+</span><span id="__span-12-38"><a id="__codelineno-12-38" name="__codelineno-12-38" href="#__codelineno-12-38"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="n">ENCRYPTION</span><span class="w"> </span><span class="n">ALGORITHM</span><span class="w"> </span><span class="s1">&#39;AES256&#39;</span><span class="p">;</span>
+</span><span id="__span-12-39"><a id="__codelineno-12-39" name="__codelineno-12-39" href="#__codelineno-12-39"></a>
+</span><span id="__span-12-40"><a id="__codelineno-12-40" name="__codelineno-12-40" href="#__codelineno-12-40"></a><span class="c1">-- Reset all to factory defaults</span>
+</span><span id="__span-12-41"><a id="__codelineno-12-41" name="__codelineno-12-41" href="#__codelineno-12-41"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CONFIGURE</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">CLEAR</span><span class="p">;</span>
+</span><span id="__span-12-42"><a id="__codelineno-12-42" name="__codelineno-12-42" href="#__codelineno-12-42"></a>
+</span><span id="__span-12-43"><a id="__codelineno-12-43" name="__codelineno-12-43" href="#__codelineno-12-43"></a><span class="c1">-- Obsolete management</span>
+</span><span id="__span-12-44"><a id="__codelineno-12-44" name="__codelineno-12-44" href="#__codelineno-12-44"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">REPORT</span><span class="w"> </span><span class="n">OBSOLETE</span><span class="p">;</span>
+</span><span id="__span-12-45"><a id="__codelineno-12-45" name="__codelineno-12-45" href="#__codelineno-12-45"></a><span class="n">RMAN</span><span class="o">&gt;</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="n">NOPROMPT</span><span class="w"> </span><span class="n">OBSOLETE</span><span class="p">;</span>
 </span></code></pre></div>
 
 

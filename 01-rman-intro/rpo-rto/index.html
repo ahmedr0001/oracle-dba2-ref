@@ -570,10 +570,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#downtime-factors" class="md-nav__link">
+  <a href="#what-eats-into-your-rto" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Downtime Factors
+        What Eats Into Your RTO
       
     </span>
   </a>
@@ -1314,10 +1314,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#downtime-factors" class="md-nav__link">
+  <a href="#what-eats-into-your-rto" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Downtime Factors
+        What Eats Into Your RTO
       
     </span>
   </a>
@@ -1385,49 +1385,41 @@
 
 
 <h1 id="rpo-rto">RPO &amp; RTO<a class="headerlink" href="#rpo-rto" title="Permanent link">&para;</a></h1>
-<p>Before choosing a backup strategy, you must understand two critical business requirements. These are not technical concepts — they are business decisions that drive every technical choice.</p>
+<p>Two business requirements that drive every backup decision.</p>
 <hr />
 <h2 id="rpo-recovery-point-objective">RPO — Recovery Point Objective<a class="headerlink" href="#rpo-recovery-point-objective" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p><strong>"How much data loss is acceptable?"</strong></p>
 </blockquote>
-<p>RPO defines the <strong>maximum age</strong> of data you can restore from backup.
-It is measured in time: seconds, minutes, hours, or days.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Time line:
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>──────────────────────────────────────────────────────►
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>       Last backup                    Failure
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>           │                             │
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>           └─────────── RPO ─────────────┘
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                    (data loss window)
-</span></code></pre></div>
+<p>The maximum age of the data you can restore to. If your last backup was 6 hours ago and the DB crashes now — you lose 6 hours of work.</p>
 <table>
 <thead>
 <tr>
 <th>RPO</th>
-<th>Meaning</th>
-<th>Typical Solution</th>
+<th>What It Means</th>
+<th>Solution</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>0 seconds</strong></td>
-<td>Zero data loss — every transaction must survive</td>
+<td>0 seconds</td>
+<td>Zero data loss</td>
 <td>Oracle Data Guard (synchronous)</td>
 </tr>
 <tr>
-<td><strong>&lt; 1 minute</strong></td>
+<td>&lt; 1 minute</td>
 <td>Near-zero loss</td>
-<td>Data Guard (async) / GoldenGate</td>
+<td>Data Guard async / GoldenGate</td>
 </tr>
 <tr>
-<td><strong>&lt; 1 hour</strong></td>
-<td>Loss of up to 1 hour of work</td>
-<td>RMAN + archive logs every 30 min</td>
+<td>&lt; 1 hour</td>
+<td>Lose up to 1 hour</td>
+<td>RMAN + frequent archive log backup</td>
 </tr>
 <tr>
-<td><strong>24 hours</strong></td>
-<td>Loss of up to one full day</td>
-<td>Nightly RMAN backup only</td>
+<td>24 hours</td>
+<td>Lose up to one day</td>
+<td>Nightly RMAN full backup</td>
 </tr>
 </tbody>
 </table>
@@ -1436,113 +1428,66 @@ It is measured in time: seconds, minutes, hours, or days.</p>
 <blockquote>
 <p><strong>"How long can the business survive without the database?"</strong></p>
 </blockquote>
-<p>RTO defines the <strong>maximum downtime</strong> allowed after a failure — from the moment the incident is detected to the moment the database is serving users again.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Time line:
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>──────────────────────────────────────────────────────►
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>       Failure           Detection           DB Online
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>          │                 │                    │
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>          └────────── RTO ──────────────────────┘
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>                    (total acceptable downtime)
-</span></code></pre></div>
+<p>The maximum downtime allowed — from the moment failure occurs to the moment users can work again.</p>
 <table>
 <thead>
 <tr>
 <th>RTO</th>
-<th>What It Means</th>
-<th>Typical Solution</th>
+<th>Solution</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>&lt; 30 seconds</strong></td>
-<td>Users barely notice</td>
-<td>Oracle RAC, Data Guard failover</td>
+<td>&lt; 30 seconds</td>
+<td>Oracle RAC / Data Guard failover</td>
 </tr>
 <tr>
-<td><strong>&lt; 15 minutes</strong></td>
-<td>Short disruption acceptable</td>
+<td>&lt; 15 minutes</td>
 <td>Data Guard switchover</td>
 </tr>
 <tr>
-<td><strong>&lt; 2 hours</strong></td>
-<td>Moderate disruption</td>
-<td>RMAN restore (small/medium DB)</td>
+<td>&lt; 2 hours</td>
+<td>RMAN restore</td>
 </tr>
 <tr>
-<td><strong>Days</strong></td>
-<td>Disaster scenario</td>
-<td>Full restore from tape/offsite</td>
+<td>Days</td>
+<td>Full restore from offsite tape</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="downtime-factors">Downtime Factors<a class="headerlink" href="#downtime-factors" title="Permanent link">&para;</a></h2>
-<p>RTO is not just "restore time." The clock starts at failure and stops when users can work again:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Total RTO = Identification time
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>          + Recovery plan review
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>          + Actual restore/recovery time
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>          + Verification time
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>          + Application restart time
-</span></code></pre></div>
-<table>
-<thead>
-<tr>
-<th>Factor</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Identification</strong></td>
-<td>How fast does the team know there's a problem? Monitoring/alerting matters here</td>
-</tr>
-<tr>
-<td><strong>Recovery plan</strong></td>
-<td>Is there a runbook? Or does the DBA have to figure it out under pressure?</td>
-</tr>
-<tr>
-<td><strong>Recovery time</strong></td>
-<td>Actual RMAN restore duration — depends on backup size and I/O speed</td>
-</tr>
-<tr>
-<td><strong>Verification</strong></td>
-<td>Confirming data integrity after recovery before allowing connections</td>
-</tr>
-</tbody>
-</table>
+<h2 id="what-eats-into-your-rto">What Eats Into Your RTO<a class="headerlink" href="#what-eats-into-your-rto" title="Permanent link">&para;</a></h2>
+<p>Total downtime = time to <strong>detect</strong> + time to <strong>decide</strong> + time to <strong>restore</strong> + time to <strong>verify</strong>.
+Plan for all four — not just the restore.</p>
 <hr />
 <h2 id="recovery-plan-prerequisites">Recovery Plan Prerequisites<a class="headerlink" href="#recovery-plan-prerequisites" title="Permanent link">&para;</a></h2>
-<p>A recovery plan needs more than just RMAN commands. Your organization needs:</p>
+<p>Before any incident, your organization must have:</p>
 <table>
 <thead>
 <tr>
 <th>Requirement</th>
-<th>Why It Matters</th>
+<th>Why</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Technology license</strong></td>
-<td>RMAN is free; Oracle Active Data Guard, GoldenGate require licenses</td>
+<td>Technology license</td>
+<td>RMAN is free; Data Guard and GoldenGate are not</td>
 </tr>
 <tr>
-<td><strong>Hardware</strong></td>
-<td>Enough disk/tape space for backups + restore target</td>
+<td>Hardware</td>
+<td>Enough disk/tape space for backups</td>
 </tr>
 <tr>
-<td><strong>Backup location</strong></td>
-<td>Local disk vs tape vs cloud — each has different RTO implications</td>
+<td>Backup location</td>
+<td>Local disk, tape, or cloud</td>
 </tr>
 <tr>
-<td><strong>Network connectivity</strong></td>
-<td>Remote backups need fast, reliable links for acceptable restore speed</td>
+<td>Tested runbook</td>
+<td>A procedure that was never tested will fail when you need it most</td>
 </tr>
 </tbody>
 </table>
-<div class="admonition tip">
-<p class="admonition-title">Document your recovery plan <em>before</em> you need it</p>
-<p>Write and test your recovery procedures when the database is healthy. A DBA debugging a failed restore script during a production outage is a very bad situation.</p>
-</div>
 
 
 
