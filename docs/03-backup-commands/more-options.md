@@ -4,194 +4,181 @@ tags: [backup, options, tags, device-type, not-backed-up]
 
 # More Backup Options
 
-## NOT BACKED UP
+---
 
-Avoid redundant backups by skipping files that have already been backed up a certain number of times. Essential for incremental or frequent backup schedules.
+## NOT BACKED UP — Skip Already-Backed-Up Files
+
+Avoids re-backing up files already covered, useful in frequent/incremental schedules.
 
 ```sql
--- Back up archive logs not yet backed up at all (0 times)
+-- Back up archive logs not yet backed up at all
 RMAN> BACKUP ARCHIVELOG NOT BACKED UP 1 TIMES;
 
--- Back up archive logs backed up fewer than 2 times
--- (ensures you have dual copies)
+-- Back up logs backed up fewer than 2 times (ensure dual copies)
 RMAN> BACKUP ARCHIVELOG NOT BACKED UP 2 TIMES;
 
--- Back up the database if not backed up in the last day
+-- Back up the database if it hasn't been backed up in the last 24 hours
 RMAN> BACKUP NOT BACKED UP SINCE TIME 'SYSDATE-1'
       DATABASE PLUS ARCHIVELOG;
 
--- Tablespace backup only if not backed up recently
+-- Tablespace backup if not done in the last week
 RMAN> BACKUP NOT BACKED UP SINCE TIME 'SYSDATE-7'
       TABLESPACE users;
 ```
 
-**Use case:** Hourly archive log backup job — each run only backs up logs created since the last run, without duplicating previously-backed-up logs.
-
 ---
 
-## DEVICE TYPE
-
-Override the default device type for a specific backup command:
+## DEVICE TYPE — Override Where Backup Is Written
 
 ```sql
--- Check and set the default
-RMAN> SHOW DEFAULT DEVICE TYPE;
-RMAN> CONFIGURE DEFAULT DEVICE TYPE TO DISK;   -- or SBT
-
--- Override for a single backup command
+-- Use disk for this specific backup (regardless of configured default)
 RMAN> BACKUP DEVICE TYPE DISK DATABASE;
+
+-- Use tape (SBT = System Backup to Tape)
 RMAN> BACKUP DEVICE TYPE SBT DATABASE;
+
+-- Change default for all future backups
+RMAN> CONFIGURE DEFAULT DEVICE TYPE TO DISK;
+RMAN> CONFIGURE DEFAULT DEVICE TYPE TO SBT;
 
 -- Override per channel in a RUN block
 RMAN> RUN {
-  ALLOCATE CHANNEL tape1 DEVICE TYPE SBT;
+  ALLOCATE CHANNEL tape1 DEVICE TYPE SBT;  -- use tape for this job only
   BACKUP DATABASE;
-  RELEASE CHANNEL tape1;
+  RELEASE CHANNEL tape1;                    -- release when done
 }
 ```
 
-| Device | When to Use |
-|---|---|
-| `DISK` | Filesystem or ASM — fast, easy, most common |
-| `SBT` | Tape library or cloud via Oracle Secure Backup / media agent |
-
 ---
 
-## TAG — Naming Your Backups
+## TAG — Label Your Backups
 
-A tag is a **label** you attach to a backup set or image copy. Makes it easy to reference specific backups later without knowing the backup key number.
+A tag is a text label attached to a backup. Lets you reference it by name later instead of by key number.
 
 ```sql
--- Backup with a custom tag
-RMAN> BACKUP DATAFILE 1, 2, 3, 4 TAG 'monthly_backup';
-
+-- Tag a database backup
 RMAN> BACKUP DATABASE TAG 'pre_patching_backup';
 
+-- Tag a tablespace backup
 RMAN> BACKUP TABLESPACE users TAG 'before_purge_20260618';
 
--- Archive logs with a tag
+-- Tag archive logs
 RMAN> BACKUP ARCHIVELOG ALL TAG 'weekly_archivelogs';
-```
 
-**Rules for tags:**
-- Multiple backup sets can share the same tag
-- Tags are case-insensitive
-- Up to 30 characters
-
-**Restore using a tag:**
-```sql
--- Reference a backup by its tag during restore
+-- Restore using a tag (instead of needing to know backup key)
 RMAN> RESTORE TABLESPACE users FROM TAG 'before_purge_20260618';
 RMAN> RESTORE DATABASE FROM TAG 'pre_patching_backup';
 ```
 
+Tags are case-insensitive, up to 30 characters. Multiple backup sets can share a tag.
+
 ---
 
-## FORMAT — Custom Backup File Naming
+## FORMAT — Custom Backup File Names
 
 ```sql
--- Custom format for a specific backup
+-- Custom format string (overrides configured channel format for this job)
 RMAN> BACKUP DATABASE FORMAT '/u01/rman_bkp/db_%d_%T_%s_%p';
--- produces: db_ORCL_20260618_42_1
+-- Result: db_ORCL_20260618_42_1
 
--- Format with unique ID
+-- Unique ID (auto-generated, guaranteed no collisions)
 RMAN> BACKUP DATABASE FORMAT '/u01/rman_bkp/%U';
--- %U = unique 8-character identifier
 
 -- Date-organized directories
 RMAN> BACKUP DATABASE FORMAT '/u01/rman_bkp/%Y/%M/%D/%U';
--- produces: /u01/rman_bkp/2026/06/18/3df5k2a1_1_1
+-- Result: /u01/rman_bkp/2026/06/18/3df5k2a1_1_1
 ```
 
 ---
 
-## DELETE INPUT — Delete After Backup
+## DELETE INPUT — Delete Source After Backup
 
 ```sql
--- Delete archive logs from disk after backing them up
+-- After backing up archive logs, delete them from disk
+-- (deletes only the specific logs backed up in this command)
 RMAN> BACKUP ARCHIVELOG ALL DELETE INPUT;
 
--- Delete ALL copies of archive logs (all destinations) after backup
+-- Delete ALL copies of archive logs from all destinations after backup
 RMAN> BACKUP ARCHIVELOG ALL DELETE ALL INPUT;
 
--- Same with filter
-RMAN> BACKUP ARCHIVELOG FROM SEQUENCE 100
-      UNTIL SEQUENCE 200
-      DELETE INPUT;
+-- With a filter
+RMAN> BACKUP ARCHIVELOG FROM SEQUENCE 100 UNTIL SEQUENCE 200 DELETE INPUT;
 ```
 
-!!! warning "DELETE INPUT only for archive logs"
-    You should never use `DELETE INPUT` with datafile backups — it would delete your live datafile after backing it up, crashing the database.
+!!! warning "Never use DELETE INPUT with datafile backups"
+    `DELETE INPUT` on a datafile backup would delete your live datafile after copying it — crashing the database.
 
 ---
 
 ## COMPRESSED BACKUPSET
 
-Compression reduces backup size significantly (often 50–70%) at the cost of CPU:
-
 ```sql
--- Compressed database backup
+-- Compress the backup set (smaller files, more CPU)
 RMAN> BACKUP AS COMPRESSED BACKUPSET DATABASE;
-
--- Compressed incremental
 RMAN> BACKUP AS COMPRESSED BACKUPSET INCREMENTAL LEVEL 1 DATABASE;
 
--- Set compression algorithm (configure once)
+-- Set compression level (BASIC = no license required)
+-- MEDIUM and HIGH require Oracle Advanced Compression license
+RMAN> CONFIGURE COMPRESSION ALGORITHM 'BASIC';
 RMAN> CONFIGURE COMPRESSION ALGORITHM 'MEDIUM';
--- Options: BASIC (default, no license), LOW, MEDIUM, HIGH
--- MEDIUM/HIGH require Oracle Advanced Compression license
+RMAN> CONFIGURE COMPRESSION ALGORITHM 'HIGH';
 ```
 
 ---
 
-## VALIDATE — Check Without Backing Up
-
-Validate checks files for corruption without creating a backup. Useful for pre-backup health checks.
+## VALIDATE — Check Files Without Backing Up
 
 ```sql
--- Validate entire database (check for block corruption)
+-- Check database for block corruption (no backup created)
 RMAN> VALIDATE DATABASE;
 
--- Validate specific tablespace
+-- Check specific tablespace
 RMAN> VALIDATE TABLESPACE users;
 
--- Validate a specific datafile
+-- Check specific datafile
 RMAN> VALIDATE DATAFILE 4;
 
--- Validate a backup piece (check backup readability)
+-- Check an existing backup piece
 RMAN> VALIDATE BACKUPSET 42;
 
--- Check for logical corruption too (more thorough, slower)
+-- Also check for logical corruption (slower but more thorough)
 RMAN> VALIDATE DATABASE CHECK LOGICAL;
 ```
 
 ---
 
-## Full BACKUP Command Reference
+## Section Commands Summary
 
-```
-RMAN> BACKUP
-        [AS {BACKUPSET | COMPRESSED BACKUPSET | COPY}]
-        [INCREMENTAL LEVEL {0 | 1} [CUMULATIVE]]
-        [DEVICE TYPE {DISK | SBT}]
-        [NOT BACKED UP [n TIMES]]
-        [NOT BACKED UP SINCE TIME 'expr']
-        [FORMAT 'format_string']
-        [TAG 'tag_name']
-        {
-          DATABASE |
-          TABLESPACE ts_name [, ts_name ...] |
-          DATAFILE file_num [, file_num ...] |
-          DATAFILE 'filepath' |
-          CURRENT CONTROLFILE |
-          SPFILE |
-          ARCHIVELOG {ALL | FROM SCN n | UNTIL SCN n | 
-                      FROM SEQUENCE n | UNTIL SEQUENCE n |
-                      FROM TIME 'expr' | UNTIL TIME 'expr' |
-                      SCN BETWEEN n AND n |
-                      SEQUENCE BETWEEN n AND n}
-        }
-        [INCLUDE CURRENT CONTROLFILE]
-        [PLUS ARCHIVELOG]
-        [DELETE [ALL] INPUT];
+```sql
+-- NOT BACKED UP
+RMAN> BACKUP ARCHIVELOG NOT BACKED UP 1 TIMES;
+RMAN> BACKUP ARCHIVELOG NOT BACKED UP 2 TIMES;
+RMAN> BACKUP NOT BACKED UP SINCE TIME 'SYSDATE-1' DATABASE PLUS ARCHIVELOG;
+
+-- DEVICE TYPE
+RMAN> BACKUP DEVICE TYPE DISK DATABASE;
+RMAN> BACKUP DEVICE TYPE SBT DATABASE;
+
+-- TAG
+RMAN> BACKUP DATABASE TAG 'pre_patching_backup';
+RMAN> BACKUP TABLESPACE users TAG 'before_purge';
+RMAN> RESTORE DATABASE FROM TAG 'pre_patching_backup';
+
+-- FORMAT
+RMAN> BACKUP DATABASE FORMAT '/path/%d_%T_%s_%p_%U';
+
+-- DELETE INPUT (archive logs only)
+RMAN> BACKUP ARCHIVELOG ALL DELETE INPUT;
+RMAN> BACKUP ARCHIVELOG ALL DELETE ALL INPUT;
+
+-- COMPRESSED
+RMAN> BACKUP AS COMPRESSED BACKUPSET DATABASE;
+RMAN> CONFIGURE COMPRESSION ALGORITHM 'BASIC';
+
+-- VALIDATE
+RMAN> VALIDATE DATABASE;
+RMAN> VALIDATE DATABASE CHECK LOGICAL;
+RMAN> VALIDATE TABLESPACE users;
+RMAN> VALIDATE DATAFILE 4;
+RMAN> VALIDATE BACKUPSET 42;
 ```

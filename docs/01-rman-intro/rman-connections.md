@@ -4,99 +4,79 @@ tags: [rman, connections, login]
 
 # RMAN Connections
 
-## Connection Syntax
-
-All RMAN connections are made from the **Linux shell** as the `oracle` OS user. RMAN connects to the Target DB via SYSDBA privileges.
+Run all RMAN commands from the Linux shell as the `oracle` OS user.
 
 ---
 
-## Target Only (No Catalog)
+## Connect Syntax
 
 ```bash
-# Simplest — local OS authentication, no catalog
+# Local connection — uses OS authentication (no password needed)
 rman target /
 
-# Equivalent explicit form
+# Explicit: local with no catalog
 rman target / nocatalog
 
-# With password (needed for remote or password-file auth)
+# With password (for remote connections)
 rman target sys/oracle
 
-# With explicit SID
+# Set SID first if needed
 export ORACLE_SID=ORCL
 rman target /
-```
 
----
-
-## Target + Recovery Catalog
-
-```bash
-# Connect to both target and catalog in one command
+# Connect to target + catalog at the same time
 rman target / catalog rmanadmin/pass@CatDB
 
-# With explicit target credentials
+# Explicit target credentials + catalog
 rman target sys/oracle@ORCL catalog rmanadmin/pass@CatDB
 ```
 
 ---
 
-## Logging & Script Execution
+## Logging and Script Files
 
 ```bash
-# Write all RMAN output to a log file (useful for scheduled jobs)
+# Write RMAN output to a log file
 rman target / log=/u01/rman_logs/backup_$(date +%Y%m%d).log
 
-# Append to existing log (don't overwrite)
+# Append to existing log (don't overwrite previous runs)
 rman target / log=/u01/rman_logs/rman.log APPEND
 
-# Execute a command file (script) from OS
+# Run a pre-written .rman script from the OS shell
 rman target / cmdfile=/u01/scripts/full_backup.rman
 
-# Execute a script file from inside RMAN prompt
+# Run a script from inside the RMAN prompt
 RMAN> @/u01/scripts/full_backup.rman
 
-# Combine: catalog + log
+# Catalog + log combined
 rman target / catalog rmanadmin/pass@CatDB log=/tmp/rman.log APPEND
 ```
 
-!!! tip "Always log in production"
-    Scheduled RMAN jobs (via `cron`) should always write to a log file. Without a log, you have no record of what happened during the backup.
-
 ---
 
-## Inside the RMAN Prompt
+## Basic Commands Inside RMAN Prompt
 
-```bash
-# These commands are run at the RMAN> prompt after connecting
+```sql
+RMAN> SHOW ALL;              -- view all CONFIGURE settings
+RMAN> LIST BACKUP SUMMARY;  -- view all recorded backups
+RMAN> REPORT SCHEMA;        -- view all datafiles RMAN tracks
 
-# Show current configuration
-RMAN> SHOW ALL;
-
-# Check what's backed up
-RMAN> LIST BACKUP SUMMARY;
-
-# Run multiple commands in a block
+-- Run multiple commands as one job
 RMAN> RUN {
   BACKUP DATABASE;
   BACKUP ARCHIVELOG ALL DELETE ALL INPUT;
 }
 
-# Exit RMAN
 RMAN> EXIT;
-RMAN> QUIT;
 ```
 
 ---
 
-## Example: Scheduled Backup Script
-
-A typical production backup script:
+## Scheduled Backup Script
 
 ```bash
 #!/bin/bash
-# /u01/scripts/nightly_backup.sh
-# Run via cron: 0 2 * * * /u01/scripts/nightly_backup.sh
+# cron: 0 2 * * * /u01/scripts/nightly_backup.sh
 
 export ORACLE_SID=ORCL
 export ORACLE_HOME=/u01/app/oracle/product/19.3.0/dbhome_1
@@ -115,13 +95,17 @@ EOF
 
 ---
 
-## Connecting to Auxiliary Database
+## Section Commands Summary
 
 ```bash
-# Auxiliary is used for DUPLICATE DATABASE (cloning)
-# You connect to it separately during the duplicate operation
-rman target sys/oracle@ORCL auxiliary sys/oracle@AUXDB
-
-# RMAN then runs:
-RMAN> DUPLICATE TARGET DATABASE TO AUXDB;
+rman target /                                   # local, no catalog
+rman target / nocatalog                         # explicit no catalog
+rman target sys/oracle                          # with password
+rman target / catalog rmanadmin/pass@CatDB      # with catalog
+rman target / log=/tmp/rman.log APPEND          # with log file
+rman target / cmdfile=/path/script.rman         # run a script
+RMAN> @/path/script.rman                        # run script from prompt
+RMAN> SHOW ALL;                                 # view all config
+RMAN> LIST BACKUP SUMMARY;                      # view backups
+RMAN> EXIT;                                     # quit
 ```

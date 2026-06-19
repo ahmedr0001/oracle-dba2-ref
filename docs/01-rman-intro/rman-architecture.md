@@ -4,98 +4,61 @@ tags: [rman, architecture, catalog, channels]
 
 # RMAN Architecture
 
-## The Big Picture
-
-RMAN is not a separate database — it is an Oracle client application that connects to databases and orchestrates backup/recovery operations on your behalf.
-
-```
-┌──────────────────────────────────────────────────────────┐
-│                    RMAN Architecture                      │
-│                                                          │
-│   ┌──────────┐      ┌─────────────┐    ┌─────────────┐  │
-│   │  RMAN    │─────►│  Target DB  │    │ Catalog DB  │  │
-│   │ (client) │      │  (ORCL)     │◄───│  (CatDB)    │  │
-│   └──────────┘      └──────┬──────┘    └─────────────┘  │
-│                            │                             │
-│                     ┌──────▼──────┐                      │
-│                     │  Channel(s) │                      │
-│                     │  (I/O proc) │                      │
-│                     └──────┬──────┘                      │
-│                            │                             │
-│                     ┌──────▼──────┐                      │
-│                     │  Backup     │                      │
-│                     │  Location   │                      │
-│                     │ (Disk/Tape) │                      │
-│                     └─────────────┘                      │
-└──────────────────────────────────────────────────────────┘
-```
+RMAN is an Oracle client application — not a separate database. You run it from the Linux shell, it connects to your database as SYSDBA, and handles all backup/recovery logic automatically.
 
 ---
 
 ## Key Components
 
-### 1. Target Database
-The database you are backing up or recovering. RMAN connects to it as a privileged user (SYSDBA).
+**Target Database** — the database you're backing up. RMAN connects to it as SYSDBA.
 
-### 2. RMAN Repository (Metadata Store)
-RMAN must store metadata about every backup it takes — what files, when, where on disk. This metadata lives in **one of two places**:
+**RMAN Repository** — where RMAN stores metadata about every backup (what files, when, where). Stored in one of two places:
 
 | Option | Where | Pros | Cons |
 |---|---|---|---|
-| **Control File** (default) | Inside the target DB's control file | No extra setup | Limited history (`CONTROL_FILE_RECORD_KEEP_TIME` default 7 days) |
-| **Recovery Catalog** | Separate database (CatDB) | Unlimited history, supports multiple targets, scripting | Requires extra DB to maintain |
+| **Control File** (default) | Inside the target DB | No setup needed | Only 7 days history by default |
+| **Recovery Catalog** | Separate database | Unlimited history, multi-DB support | Requires a second DB to maintain |
 
-!!! info "Best Practice"
-    For production use, always set up a **Recovery Catalog**. The control file is acceptable only for small/dev environments. Oracle recommends not setting `CONTROL_FILE_RECORD_KEEP_TIME` above 10 days — if you need longer retention, use a catalog.
+**Channel** — an I/O worker process that reads datafiles and writes to backup destination. More channels = faster backup (one per disk is optimal).
 
-### 3. Channels
-A channel is an I/O stream — a server process on the Target DB that reads/writes backup data. More channels = more parallelism = faster backups (up to the number of physical disks).
-
-```
-Channel → reads datafiles → writes to disk/tape
-```
-
-### 4. Backup Output Types
-
-=== "Backup Set (default)"
-    - RMAN's proprietary format — multiple datafiles compressed into backup **pieces**
-    - Can use compression and encryption
-    - Cannot be used directly — must be restored first
-    - One backup set can span multiple backup pieces
-    ```
-    Datafiles 1,2,3,4,5
-         │
-         ▼
-    ┌─────────────┐  ┌─────────────┐
-    │ Backup Piece│  │ Backup Piece│   ← backup set
-    │  (DBF 1-3) │  │  (DBF 4-5) │
-    └─────────────┘  └─────────────┘
-    ```
-
-=== "Image Copy"
-    - Exact block-for-block copy of a datafile — same as `cp` but RMAN-tracked
-    - Can be used immediately as a datafile without restore step (much faster recovery)
-    - Takes same space as original file — no compression
-    ```
-    users01.dbf  ──COPY──►  /backup/users01.dbf (identical)
-    ```
-
-### 5. Auxiliary Database
-A separate instance used for:
-- Duplicating (cloning) the target database
-- Restoring a backup under a new name
-- Used with `DUPLICATE DATABASE` command
+**Backup Destination** — disk directory, ASM disk group, or tape library (SBT).
 
 ---
 
-## What RMAN Can & Cannot Back Up
+## Backup Output: Backup Set vs Image Copy
+
+| | Backup Set (default) | Image Copy |
+|---|---|---|
+| Format | RMAN proprietary (compressed) | Exact copy of the original file |
+| Space | Less (can compress) | Same as original |
+| Restore needed? | Yes — must decompress first | No — can use directly |
+| Recovery speed | Slower (restore then recover) | Faster (just recover) |
+| Command | `BACKUP DATABASE` | `BACKUP AS COPY DATABASE` |
+
+---
+
+## What RMAN Can and Cannot Back Up
 
 | ✅ Can Back Up | ❌ Cannot Back Up |
 |---|---|
-| Data files | Temp files (no user data) |
-| Control files | Online redo log files (use archiving instead) |
-| Server parameter file (SPFILE) | Password file |
-| Archived redo logs | Network config files (`listener.ora`, `tnsnames.ora`) |
+| Datafiles | Temp files |
+| Control files | Online redo log files |
+| SPFILE | Password file |
+| Archived redo logs | `listener.ora`, `tnsnames.ora` |
 
 !!! warning "Online redo logs are never backed up directly"
-    RMAN backs up **archived** redo logs. Online redo logs are backed up indirectly — by switching and archiving them before backup.
+    RMAN archives them first (log switch), then backs up the resulting archive log.
+
+---
+
+## Section Commands Summary
+
+```bash
+# Connect to RMAN (see full syntax in Connections page)
+rman target /
+
+# Check what RMAN can see
+RMAN> REPORT SCHEMA;       -- lists all datafiles RMAN knows about
+RMAN> LIST BACKUP SUMMARY; -- lists all recorded backups
+RMAN> SHOW ALL;            -- shows current RMAN configuration
+```

@@ -4,161 +4,136 @@ tags: [backup, full, incremental, differential, cumulative]
 
 # Backup Types Explained
 
-## Two Dimensions of Every Backup
-
-Every RMAN backup has two independent attributes that are often confused:
-
-```
-Dimension 1: SCOPE        Dimension 2: STRATEGY
-─────────────────         ─────────────────────
-Whole Backup              Full Backup
-Partial Backup            Incremental Backup
-                            ├── Differential
-                            └── Cumulative
-```
-
-These are independent choices. For example: *"Partial Incremental Differential backup of the USERS tablespace"* is completely valid.
+Every RMAN backup has two independent choices: **what files** to include (scope) and **which blocks** to copy (strategy).
 
 ---
 
 ## Full vs Incremental
 
-### Full Backup
-Copies **every used data block** in the target files — regardless of when they were last changed.
+**Full backup** — copies every used block in the target files, regardless of when they last changed.
 
-```sql
--- Full backup of the whole database
-RMAN> BACKUP DATABASE;
+**Incremental backup** — copies only blocks that changed since a previous backup. Uses levels:
 
--- Full backup of a tablespace
-RMAN> BACKUP TABLESPACE users;
-```
-
-!!! info "Full ≠ Whole"
-    `FULL` refers to which **blocks** are copied (all of them).
-    `WHOLE` refers to which **files** are included (the entire database).
-    A "Full Whole" backup copies every block in every datafile.
-
-### Incremental Backup
-Copies only **blocks that changed** since a reference backup. Uses backup levels: **Level 0** and **Level 1**.
-
-- **Level 0** — the baseline. Copies all used blocks (same data as a full backup, but RMAN can use it as an incremental base).
+- **Level 0** — the baseline. Same data as a full backup, but RMAN can use it as the base for Level 1.
 - **Level 1** — changes only. Copies blocks modified since the last Level 0 or Level 1.
 
-```
-              ← Full backup (Level 0 basis)
-Level 0 ────────────────────────────────────────────────────►
-Level 1 (Differential) ──┼──────────┼──────────┼──────────►
-                         Mon        Tue        Wed
-                         (changes   (changes   (changes
-                          since L0)  since Mon)  since Tue)
-```
+!!! info "Full ≠ Whole"
+    `FULL` = which blocks (all of them). `WHOLE` = which files (the entire database). These are independent choices.
 
 ---
 
-## Differential vs Cumulative Incremental
+## Differential vs Cumulative (Level 1 sub-types)
 
-This is a sub-choice within Level 1 incremental:
+**Differential** (default) — backs up blocks changed since the **last Level 0 or Level 1**, whichever is more recent.
 
-### Differential Incremental (Default)
-Backs up blocks changed since the **last Level 1 OR Level 0** — whichever is more recent.
+**Cumulative** — backs up blocks changed since the **last Level 0 only** (ignores other Level 1s).
 
-```
-Sunday: Level 0 (all blocks)           → large backup
-Monday: Level 1 Differential           → changes since Sunday
-Tuesday: Level 1 Differential          → changes since Monday only
-Wednesday: Level 1 Differential        → changes since Tuesday only
-```
-
-**Pros:** Each incremental backup is small (only daily changes)
-**Cons:** Recovery applies many incremental backups — slower restore
-
-### Cumulative Incremental
-Backs up blocks changed since the **last Level 0** only — ignores other Level 1s.
-
-```
-Sunday: Level 0 (all blocks)           → large backup
-Monday: Level 1 Cumulative             → all changes since Sunday
-Tuesday: Level 1 Cumulative            → all changes since Sunday (includes Mon)
-Wednesday: Level 1 Cumulative          → all changes since Sunday (includes Mon+Tue)
-```
-
-**Pros:** Recovery is simpler — apply Level 0, then latest Level 1 only
-**Cons:** Each cumulative backup grows as the week progresses
+| | Differential | Cumulative |
+|---|---|---|
+| Daily backup size | Small (only today's changes) | Grows during the week |
+| Recovery steps | Apply L0 + all L1s in sequence | Apply L0 + latest L1 only |
+| Recovery speed | Slower | Faster |
 
 ---
 
-## RMAN Incremental Backup Commands
+## Commands
 
 ```sql
--- Level 0 (baseline — must run before any Level 1)
+-- Full backup (all used blocks, cannot be used as incremental base)
+RMAN> BACKUP DATABASE;
+
+-- Level 0 — baseline for incremental strategy
 RMAN> BACKUP INCREMENTAL LEVEL 0 DATABASE;
 
--- Level 1 Differential (default — changes since last Level 0 or 1)
+-- Level 1 Differential (default — changes since last L0 or L1)
 RMAN> BACKUP INCREMENTAL LEVEL 1 DATABASE;
 
--- Level 1 Cumulative (changes since last Level 0 only)
+-- Level 1 Cumulative (changes since last L0 only)
 RMAN> BACKUP INCREMENTAL LEVEL 1 CUMULATIVE DATABASE;
 
--- Incremental backup of specific tablespace
+-- Tablespace incremental
 RMAN> BACKUP INCREMENTAL LEVEL 1 TABLESPACE users;
 
--- Incremental + archive logs
+-- Include archive logs with any incremental
 RMAN> BACKUP INCREMENTAL LEVEL 1 DATABASE PLUS ARCHIVELOG;
 ```
 
 ---
 
-## Typical Weekly Backup Strategies
+## Typical Weekly Strategies
 
-=== "Strategy A — Differential"
+=== "Differential (small daily backups)"
     ```sql
-    -- Sunday night: Level 0 (full baseline)
+    -- Sunday: Level 0 baseline
     RMAN> BACKUP INCREMENTAL LEVEL 0 DATABASE PLUS ARCHIVELOG;
 
-    -- Mon–Sat nights: Level 1 Differential (daily changes only)
+    -- Mon-Sat: Level 1 Differential (today's changes only)
     RMAN> BACKUP INCREMENTAL LEVEL 1 DATABASE PLUS ARCHIVELOG;
+    -- Recovery: restore L0 → apply each L1 in order
     ```
-    **Recovery:** Apply Level 0 + all Level 1s in sequence
 
-=== "Strategy B — Cumulative"
+=== "Cumulative (faster recovery)"
     ```sql
-    -- Sunday night: Level 0
+    -- Sunday: Level 0 baseline
     RMAN> BACKUP INCREMENTAL LEVEL 0 DATABASE PLUS ARCHIVELOG;
 
-    -- Mon–Sat nights: Level 1 Cumulative
+    -- Mon-Sat: Level 1 Cumulative (all changes since Sunday)
     RMAN> BACKUP INCREMENTAL LEVEL 1 CUMULATIVE DATABASE PLUS ARCHIVELOG;
+    -- Recovery: restore L0 → apply only the latest L1
     ```
-    **Recovery:** Apply Level 0 + latest Level 1 only (faster)
 
-=== "Strategy C — Simple Full"
+=== "Simple Full (small databases)"
     ```sql
-    -- Every night: full backup (small databases where speed isn't a concern)
+    -- Every night: full compressed backup
     RMAN> BACKUP AS COMPRESSED BACKUPSET DATABASE PLUS ARCHIVELOG;
     RMAN> DELETE NOPROMPT OBSOLETE;
     ```
 
 ---
 
-## Check What's Been Backed Up
+## Check Backup Status
 
 ```sql
--- Summary of all backups
+-- High-level summary of all backups
 RMAN> LIST BACKUP SUMMARY;
 
--- Detailed backup info
+-- Full detail of all backups
 RMAN> LIST BACKUP;
 
--- Backups of a specific file
-RMAN> LIST BACKUP OF DATAFILE 1;
+-- Backups of specific objects
+RMAN> LIST BACKUP OF DATABASE;
 RMAN> LIST BACKUP OF TABLESPACE users;
+RMAN> LIST BACKUP OF DATAFILE 1;
 RMAN> LIST BACKUP OF ARCHIVELOG ALL;
 
--- Image copies only
-RMAN> LIST COPY;
-
--- What files still need backup?
+-- What still needs backing up?
 RMAN> REPORT NEED BACKUP;
-RMAN> REPORT NEED BACKUP DAYS 3;    -- files not backed up in 3 days
-RMAN> REPORT NEED BACKUP REDUNDANCY 2;  -- files with fewer than 2 backups
+RMAN> REPORT NEED BACKUP DAYS 3;         -- not backed up in 3 days
+RMAN> REPORT NEED BACKUP REDUNDANCY 2;   -- fewer than 2 backup copies
+```
+
+---
+
+## Section Commands Summary
+
+```sql
+-- Full backup
+RMAN> BACKUP DATABASE;
+RMAN> BACKUP AS COMPRESSED BACKUPSET DATABASE;
+
+-- Incremental
+RMAN> BACKUP INCREMENTAL LEVEL 0 DATABASE;
+RMAN> BACKUP INCREMENTAL LEVEL 1 DATABASE;
+RMAN> BACKUP INCREMENTAL LEVEL 1 CUMULATIVE DATABASE;
+RMAN> BACKUP INCREMENTAL LEVEL 1 TABLESPACE users;
+RMAN> BACKUP INCREMENTAL LEVEL 1 DATABASE PLUS ARCHIVELOG;
+
+-- List and report
+RMAN> LIST BACKUP SUMMARY;
+RMAN> LIST BACKUP OF DATABASE;
+RMAN> LIST BACKUP OF TABLESPACE users;
+RMAN> LIST BACKUP OF DATAFILE 1;
+RMAN> REPORT NEED BACKUP;
+RMAN> REPORT NEED BACKUP DAYS 3;
+RMAN> REPORT NEED BACKUP REDUNDANCY 2;
 ```

@@ -4,56 +4,35 @@ tags: [fra, fast-recovery-area, storage]
 
 # Fast Recovery Area (FRA)
 
-## What Is the FRA?
+The FRA is a single directory (or ASM disk group) where Oracle automatically stores and manages all recovery-related files. Instead of configuring separate paths for archive logs, backups, and flashback logs, you point Oracle at one location and it handles the rest.
 
-The Fast Recovery Area is a **single, unified storage location** (directory or ASM disk group) where Oracle automatically manages all files related to backup and recovery. Instead of scattering recovery files across multiple locations, the FRA gives Oracle one place to look.
-
-```
-FRA Location
-─────────────────────────────────────
-│ Control file copies                │  ← Permanent (used by the instance)
-│ Online redo log members            │  ← Permanent
-│                                   │
-│ Archived redo logs                 │  ← Transient (can be deleted when backed up)
-│ Flashback logs                     │  ← Transient
-│ RMAN backup sets                   │  ← Transient
-│ RMAN image copies                  │  ← Transient
-│ Control file auto backups          │  ← Transient
-└───────────────────────────────────┘
-```
-
-**Permanent** = files the instance actively uses — Oracle won't delete these automatically.
-**Transient** = backup/recovery files — Oracle manages space by deleting old ones when needed.
+**Permanent files** (instance uses actively — never auto-deleted): control file copies, redo log members.
+**Transient files** (Oracle auto-manages space by deleting old ones): archived logs, RMAN backup sets, image copies, flashback logs, control file auto backups.
 
 ---
 
 ## Configure the FRA
 
-Two parameters, set together:
-
 ```sql
+-- Set the FRA size limit first — Oracle won't write past this
+ALTER SYSTEM SET DB_RECOVERY_FILE_DEST_SIZE = 20G
+  SCOPE = BOTH;  -- takes effect immediately AND persists after restart
+
 -- Set the FRA directory path (filesystem or ASM)
 ALTER SYSTEM SET DB_RECOVERY_FILE_DEST
   = '/u01/app/oracle/fast_recovery_area'
   SCOPE = BOTH;
 
--- Set the FRA size limit — Oracle will not exceed this
-ALTER SYSTEM SET DB_RECOVERY_FILE_DEST_SIZE = 20G
-  SCOPE = BOTH;
-
--- Check current settings
+-- Verify both settings
 SHOW PARAMETER DB_RECOVERY_FILE_DEST;
 ```
-
-!!! warning "Set the SIZE before the DEST"
-    Oracle validates that the size is sufficient when you set the destination. Set `DB_RECOVERY_FILE_DEST_SIZE` first to avoid errors.
 
 ---
 
 ## Disable the FRA
 
 ```sql
--- Remove the FRA destination (disables FRA)
+-- Remove the FRA destination (empty string = disabled)
 ALTER SYSTEM SET DB_RECOVERY_FILE_DEST = '' SCOPE = BOTH;
 ```
 
@@ -61,32 +40,35 @@ ALTER SYSTEM SET DB_RECOVERY_FILE_DEST = '' SCOPE = BOTH;
 
 ## What Happens When FRA Fills Up
 
-Oracle uses a space management algorithm for the FRA:
+Oracle tries to free space in this order:
+1. Delete obsolete backup sets
+2. Delete redundant copies
+3. Delete archive logs already backed up
 
-1. First deletes **obsolete** backup sets (already beyond retention policy)
-2. Then deletes **redundant** copies of files
-3. Then deletes **already-backed-up** archive logs
-4. If it still can't free space → **ORA-00257: archiver error**
+If it still can't free space, you get:
 
 ```
 ORA-00257: archiver error. Connect internal only, until freed.
 ```
 
-This error means the archiver process cannot write new archive logs — **the database effectively stops accepting new transactions.**
+This means the archiver cannot write new archive logs — **the database stops accepting new transactions**.
 
 ### Fix ORA-00257
 
-```bash
-# Step 1: Connect as SYSDBA (even with ORA-00257 active)
+```sql
+-- Connect as SYSDBA (ORA-00257 still allows SYSDBA connections)
 sqlplus / as sysdba
 
-# Step 2: Check FRA usage
-SELECT * FROM V$RECOVERY_AREA_USAGE;
+-- Check which file type is consuming FRA space
+SELECT FILE_TYPE, PERCENT_SPACE_USED, PERCENT_SPACE_RECLAIMABLE
+FROM V$RECOVERY_AREA_USAGE;
 
-# Step 3: Option A — increase FRA size
+-- Option A: increase FRA size
 ALTER SYSTEM SET DB_RECOVERY_FILE_DEST_SIZE = 30G SCOPE=BOTH;
+```
 
-# Step 4: Option B — delete obsolete backups via RMAN
+```bash
+# Option B: delete old archive logs via RMAN
 rman target /
 RMAN> DELETE NOPROMPT OBSOLETE;
 RMAN> DELETE NOPROMPT ARCHIVELOG ALL COMPLETED BEFORE 'SYSDATE-3';
@@ -97,38 +79,47 @@ RMAN> DELETE NOPROMPT ARCHIVELOG ALL COMPLETED BEFORE 'SYSDATE-3';
 ## Monitor FRA Space
 
 ```sql
--- Summary: total space, used, reclaimable
-SELECT * FROM V$RECOVERY_FILE_DEST;
--- Columns: NAME, SPACE_LIMIT, SPACE_USED, SPACE_RECLAIMABLE, NUMBER_OF_FILES
+-- Summary: total, used, reclaimable
+-- SPACE_LIMIT = max size you configured
+-- SPACE_USED = how much is used now
+-- SPACE_RECLAIMABLE = how much can be freed (obsolete/already backed up files)
+SELECT NAME, SPACE_LIMIT/1024/1024/1024 AS LIMIT_GB,
+       SPACE_USED/1024/1024/1024       AS USED_GB,
+       SPACE_RECLAIMABLE/1024/1024/1024 AS RECLAIMABLE_GB,
+       NUMBER_OF_FILES
+FROM V$RECOVERY_FILE_DEST;
 
--- Breakdown by file type: what's consuming FRA space?
+-- Breakdown by file type
 SELECT FILE_TYPE,
-       PERCENT_SPACE_USED    AS PCT_USED,
+       PERCENT_SPACE_USED        AS PCT_USED,
        PERCENT_SPACE_RECLAIMABLE AS PCT_RECLAIMABLE,
        NUMBER_OF_FILES
 FROM V$RECOVERY_AREA_USAGE;
 ```
 
-**V$RECOVERY_AREA_USAGE FILE_TYPE values:**
-
-| FILE_TYPE | What It Is |
-|---|---|
-| `CONTROL FILE` | Control file copies |
-| `REDO LOG` | Online redo log members in FRA |
-| `ARCHIVED LOG` | Archived redo log files |
-| `BACKUP PIECE` | RMAN backup set pieces |
-| `IMAGE COPY` | RMAN image copies |
-| `FLASHBACK LOG` | Flashback Database logs |
-| `FOREIGN ARCHIVED LOG` | Logs from standby/logical standby |
-
 ---
 
-## FRA Best Practices
+## Section Commands Summary
 
-| Practice | Reason |
-|---|---|
-| Set FRA ≥ 3× the DB size | Room for backup sets + archive logs + flashback logs |
-| Use a separate filesystem/disk for FRA | Avoid competing I/O with DB datafiles |
-| Monitor `V$RECOVERY_AREA_USAGE` daily | Catch space issues before ORA-00257 hits |
-| Enable CONTROLFILE AUTOBACKUP | Control file is automatically placed in FRA |
-| Keep archive logs in FRA | Oracle auto-manages them when space is needed |
+```sql
+-- Configure
+ALTER SYSTEM SET DB_RECOVERY_FILE_DEST_SIZE = 20G SCOPE=BOTH;
+ALTER SYSTEM SET DB_RECOVERY_FILE_DEST = '/u01/fra' SCOPE=BOTH;
+
+-- Disable
+ALTER SYSTEM SET DB_RECOVERY_FILE_DEST = '' SCOPE=BOTH;
+
+-- Check settings
+SHOW PARAMETER DB_RECOVERY_FILE_DEST;
+
+-- Monitor space
+SELECT NAME, SPACE_LIMIT, SPACE_USED, SPACE_RECLAIMABLE FROM V$RECOVERY_FILE_DEST;
+SELECT FILE_TYPE, PERCENT_SPACE_USED, PERCENT_SPACE_RECLAIMABLE FROM V$RECOVERY_AREA_USAGE;
+```
+
+```bash
+# Fix ORA-00257 (FRA full)
+rman target /
+RMAN> DELETE NOPROMPT OBSOLETE;
+RMAN> DELETE NOPROMPT ARCHIVELOG ALL COMPLETED BEFORE 'SYSDATE-3';
+```
